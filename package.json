@@ -1,0 +1,30 @@
+{
+  "name": "palma-site",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "PALMA — Mobilier & aménagement sur mesure, Alger. Site vitrine MVP.",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "check": "node scripts/check-content.mjs",
+    "verify": "npm run check && node scripts/smoke-render.mjs",
+    "images": "node scripts/optimize-images.mjs"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.3"
+  },
+  "devDependencies": {
+    "@fontsource-variable/fraunces": "^5.3.0",
+    "@fontsource-variable/manrope": "^5.3.0",
+    "@fontsource-variable/noto-kufi-arabic": "^5.3.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "@vitejs/plugin-react": "^6.1.1",
+    "sharp": "^0.34.5",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.2.2"
+  }
+}

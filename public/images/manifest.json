@@ -1,0 +1,78 @@
+[
+  {
+    "src": "/images/hero-01.jpg",
+    "ratio": 1.12
+  },
+  {
+    "src": "/images/hero-02.jpg",
+    "ratio": 1.9
+  },
+  {
+    "src": "/images/product-01.jpg",
+    "ratio": 0.82
+  },
+  {
+    "src": "/images/product-02.jpg",
+    "ratio": 1.28
+  },
+  {
+    "src": "/images/product-03.jpg",
+    "ratio": 1.28
+  },
+  {
+    "src": "/images/product-04.jpg",
+    "ratio": 0.82
+  },
+  {
+    "src": "/images/product-05.jpg",
+    "ratio": 1.28
+  },
+  {
+    "src": "/images/product-06.jpg",
+    "ratio": 0.82
+  },
+  {
+    "src": "/images/product-07.jpg",
+    "ratio": 1.28
+  },
+  {
+    "src": "/images/product-08.jpg",
+    "ratio": 0.82
+  },
+  {
+    "src": "/images/ambiance-01.jpg",
+    "ratio": 1.72
+  },
+  {
+    "src": "/images/ambiance-02.jpg",
+    "ratio": 0.72
+  },
+  {
+    "src": "/images/ambiance-03.jpg",
+    "ratio": 1.02
+  },
+  {
+    "src": "/images/ambiance-04.jpg",
+    "ratio": 1.02
+  },
+  {
+    "src": "/images/ambiance-05.jpg",
+    "ratio": 1.72
+  },
+  {
+    "src": "/images/material-01.jpg",
+    "ratio": 1.28
+  },
+  {
+    "src": "/images/material-02.jpg",
+    "ratio": 1.28
+  },
+  {
+    "src": "/images/material-03.jpg",
+    "ratio": 1.28
+  },
+  {
+    "src": "/images/material-04.jpg",
+    "ratio": 1.28
+  }
+]
