@@ -134,6 +134,56 @@ const Globe = (p) => (
     <path d="M3.5 12h17M12 3.5c2.5 2.6 2.5 14.4 0 17M12 3.5c-2.5 2.6-2.5 14.4 0 17" />
   </svg>
 )
+const Board = (p) => (
+  <svg {...p}>
+    <rect x="3" y="4.5" width="18" height="11" rx="1" />
+    <path d="M12 15.5V19M8.5 19h7" />
+    <path d="M6.5 8.5h7M6.5 11.5h4.5" />
+  </svg>
+)
+const Archive = (p) => (
+  <svg {...p}>
+    <rect x="3.5" y="4" width="17" height="4" rx="1" />
+    <path d="M5 8v11.5a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5V8" />
+    <path d="M9.5 12h5" />
+  </svg>
+)
+const Wood = (p) => (
+  <svg {...p}>
+    <rect x="3" y="6.5" width="18" height="11" rx="1" />
+    <path d="M3 10h18M3 14h18" opacity="0.55" />
+    <path d="M8 6.5v11M14 6.5v11" opacity="0.35" />
+  </svg>
+)
+const Metal = (p) => (
+  <svg {...p}>
+    <rect x="4" y="3.5" width="16" height="17" rx="1" />
+    <path d="M12 3.5v17M4 12h16" />
+    <path d="M9 7.5h1.5M13.5 7.5H15M9 16.5h1.5M13.5 16.5H15" />
+  </svg>
+)
+const Factory = (p) => (
+  <svg {...p}>
+    <path d="M3 20.5h18" />
+    <path d="M4.5 20.5V10l5 3V10l5 3V7.5h4.5V20.5" />
+    <path d="M7 17h1.5M12 17h1.5M17 17h1" />
+  </svg>
+)
+const Truck = (p) => (
+  <svg {...p}>
+    <path d="M2.5 6.5h10v10h-10z" />
+    <path d="M12.5 10h4l3 3v3.5h-7z" />
+    <circle cx="6.5" cy="18.5" r="1.8" />
+    <circle cx="16.5" cy="18.5" r="1.8" />
+  </svg>
+)
+const WoodMetal = (p) => (
+  <svg {...p}>
+    <path d="M3.5 5.5h8v8h-8z" />
+    <path d="M12.5 10.5h8v8h-8z" />
+    <path d="M12.5 5.5h8M3.5 18.5h8" opacity="0.55" />
+  </svg>
+)
 const Swoosh = (p) => (
   <svg {...p}>
     <path d="M4 19c3-9 8-13 16-14-1 8-5 13-11 14-2.5.4-4.4.3-5 0Z" />
@@ -169,34 +219,39 @@ const ICONS = {
   globe: Globe,
   leaf: Swoosh,
   saw: Saw,
+  board: Board,
+  archive: Archive,
+  wood: Wood,
+  metal: Metal,
+  factory: Factory,
+  truck: Truck,
+  'wood-metal': WoodMetal,
 }
 
-/** Logo Palma : palme stylisee + typographie serif. */
-export function Logo({ className = '', tone = 'ink', id = 'palma-logo' }) {
+/** Monogramme Palma Meuble : plateau + traverse (bois sur métal), wordmark serif. */
+export function Logo({ className = '', tone = 'ink', compact = false, place = true }) {
   const fg = tone === 'light' ? 'var(--color-bone)' : 'var(--color-ink)'
+  const accent = tone === 'light' ? 'var(--color-oak)' : 'var(--color-palm)'
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`.trim()} dir="ltr">
-      <svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-        <title>{id}</title>
-        <path
-          d="M16 27V12"
-          stroke={fg}
-          strokeWidth="1.8"
-          strokeLinecap="round"
-        />
-        <path
-          d="M16 12C16 7.6 12.7 5 7.5 5.5 8 10 11.3 12.6 16 12ZM16 12c0-4.4 3.3-7 8.5-6.5C24 10 20.7 12.6 16 12ZM16 18.5c-3-2.8-6.9-3.4-9.8-2.1.9 3 5 4.7 9.8 2.1ZM16 18.5c3-2.8 6.9-3.4 9.8-2.1-.9 3-5 4.7-9.8 2.1Z"
-          fill={fg}
-          opacity="0.9"
-        />
+      <svg width={compact ? 22 : 26} height={compact ? 22 : 26} viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="30" height="30" rx="3" fill={accent} />
+        <path d="M6 11.5h20" stroke={tone === 'light' ? 'var(--color-ink)' : 'var(--color-bone)'} strokeWidth="2.6" strokeLinecap="square" />
+        <path d="M9.5 11.5V25M22.5 11.5V25" stroke={tone === 'light' ? 'var(--color-ink)' : 'var(--color-bone)'} strokeWidth="1.7" strokeLinecap="square" opacity="0.9" />
+        <path d="M9.5 18.5h13" stroke={tone === 'light' ? 'var(--color-ink)' : 'var(--color-bone)'} strokeWidth="1.7" strokeLinecap="square" opacity="0.6" />
       </svg>
       <span className="flex flex-col leading-none">
-        <span
-          className="font-display text-[1.35rem] font-semibold tracking-[0.16em] uppercase"
-          style={{ color: fg }}
-        >
-          Palma
+        <span className="font-display text-[1.25rem] font-semibold tracking-[0.04em]" style={{ color: fg }}>
+          Palma <span className="font-normal">Meuble</span>
         </span>
+        {place && (
+          <span
+            className="mt-1 text-[0.5625rem] font-bold uppercase tracking-[0.22em]"
+            style={{ color: tone === 'light' ? 'rgba(241,238,231,0.6)' : 'var(--color-stone)' }}
+          >
+            EURL · Constantine
+          </span>
+        )}
       </span>
     </span>
   )

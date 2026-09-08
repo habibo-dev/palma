@@ -1,28 +1,29 @@
 import { useMemo, useState } from 'react'
 import { useLang } from '../lib/i18n.jsx'
-import { company, mailLink, whatsappLink } from '../content/company.js'
+import { company, mailLink, telLink, whatsappLink } from '../content/company.js'
 import { Icon } from './Icons.jsx'
 import { Button } from './UI.jsx'
 
 const EMPTY = {
   name: '',
-  company: '',
+  organisation: '',
   phone: '',
   email: '',
   type: '',
-  size: '',
+  volumes: '',
+  place: '',
   budget: '',
   message: '',
   consent: false,
 }
 
 /**
- * Pas de back-end sur la version de presentation : le formulaire
- * prepare un message propre, puis laisse le visiteur l'envoyer par le canal
- * qu'il prefere (WhatsApp, e-mail, presse-papiers). Zero perte de contact.
+ * Pas de back-end sur cette version : le formulaire met en forme une demande
+ * de devis complète, puis laisse l’acheteur l’envoyer par WhatsApp, e-mail ou
+ * presse-papiers. Zéro contact perdu, zéro serveur à maintenir.
  */
 export function QuoteForm({ context, compact = false }) {
-  const { t, L, lang } = useLang()
+  const { t, lang } = useLang()
   const [values, setValues] = useState(EMPTY)
   const [error, setError] = useState(false)
   const [done, setDone] = useState(false)
@@ -34,22 +35,25 @@ export function QuoteForm({ context, compact = false }) {
     if (error) setError(false)
   }
 
+  const contextLabel = lang === 'ar' ? 'التشكيلة' : lang === 'en' ? 'Range' : 'Gamme'
+
   const message = useMemo(() => {
     const strip = (label) => String(label).replace(' *', '')
     const rows = [
       t('form.msgIntro'),
-      context && `${lang === 'ar' ? 'القطعة' : lang === 'en' ? 'Piece' : 'Pièce'} : ${context}`,
+      context && `${contextLabel} : ${context}`,
       `${strip(t('form.name'))} : ${values.name}`,
-      values.company && `${strip(t('form.company'))} : ${values.company}`,
+      values.organisation && `${strip(t('form.company'))} : ${values.organisation}`,
       `${strip(t('form.phone'))} : ${values.phone}`,
       values.email && `${strip(t('form.email'))} : ${values.email}`,
       values.type && `${strip(t('form.type'))} : ${values.type}`,
-      values.size && `${strip(t('form.size'))} : ${strip(values.size)}`,
+      values.volumes && `${strip(t('form.size'))} : ${values.volumes}`,
+      values.place && `${strip(t('form.place'))} : ${values.place}`,
       values.budget && `${strip(t('form.budget'))} : ${values.budget}`,
       values.message && `${strip(t('form.message'))} : ${values.message}`,
     ].filter(Boolean)
     return rows.join('\n')
-  }, [values, context, t, lang])
+  }, [values, context, t, lang, contextLabel])
 
   const submit = (e) => {
     e.preventDefault()
@@ -70,10 +74,14 @@ export function QuoteForm({ context, compact = false }) {
 
   const typeOpts = t('form.typeOpts')
   const budgetOpts = t('form.budgetOpts')
+  const emailHref = mailLink({
+    subject: `${t('form.msgIntro')}${context ? ` — ${context}` : ''}`,
+    body: message,
+  })
 
   if (done) {
     return (
-      <div className="card bg-paper p-7">
+      <div className="card bg-paper p-6 sm:p-7">
         <div className="flex items-start gap-4">
           <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-palm text-bone">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -86,7 +94,10 @@ export function QuoteForm({ context, compact = false }) {
           </div>
         </div>
 
-        <pre className="mt-6 max-h-56 overflow-auto whitespace-pre-wrap rounded-soft border border-line bg-bone p-4 text-left font-sans text-[0.8125rem] leading-relaxed text-ink-soft" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+        <pre
+          className="mt-6 max-h-60 overflow-auto whitespace-pre-wrap rounded-soft border border-line bg-bone p-4 text-start font-sans text-[0.8125rem] leading-relaxed text-ink-soft"
+          dir={lang === 'ar' ? 'rtl' : 'ltr'}
+        >
           {message}
         </pre>
 
@@ -94,13 +105,20 @@ export function QuoteForm({ context, compact = false }) {
           <Button href={whatsappLink(message)} target="_blank" rel="noopener" icon="whatsapp">
             {t('contact.sendWhatsapp')}
           </Button>
-          <Button variant="ghost" href={mailLink({ subject: `${t('form.msgIntro')}${context ? ` — ${context}` : ''}`, body: message })} icon="mail">
-            {t('contact.sendEmail')}
-          </Button>
+          {emailHref ? (
+            <Button variant="ghost" href={emailHref} icon="mail">
+              {t('contact.sendEmail')}
+            </Button>
+          ) : (
+            <Button variant="ghost" href={telLink(0)} icon="phone">
+              {t('cta.call')}
+            </Button>
+          )}
         </div>
+
         <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
           <button type="button" onClick={copy} className="link-arrow !border-none !p-0">
-            <Icon name="tool" size={14} />
+            <Icon name="layers" size={14} />
             {copied ? t('contact.copied') : t('contact.copy')}
           </button>
           <button type="button" onClick={() => setDone(false)} className="link-arrow !border-none !p-0 text-stone">
@@ -113,9 +131,9 @@ export function QuoteForm({ context, compact = false }) {
 
   return (
     <form onSubmit={submit} noValidate className="card bg-paper p-6 sm:p-7">
-      <div className="flex items-baseline justify-between gap-4">
+      <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h3 className="h3">{t('contact.formTitle')}</h3>
-        <span className="tag whitespace-nowrap">{company.responseTime[lang]}</span>
+        {context && <span className="chip">{context}</span>}
       </div>
       <p className="body-sm mt-2">{t('contact.formIntro')}</p>
 
@@ -123,8 +141,8 @@ export function QuoteForm({ context, compact = false }) {
         <Field label={t('form.name')} id="qf-name" required>
           <input id="qf-name" className="input" placeholder={t('form.namePh')} value={values.name} onChange={set('name')} required autoComplete="name" />
         </Field>
-        <Field label={t('form.company')} id="qf-company">
-          <input id="qf-company" className="input" placeholder={t('form.companyPh')} value={values.company} onChange={set('company')} autoComplete="organization" />
+        <Field label={t('form.company')} id="qf-orga">
+          <input id="qf-orga" className="input" placeholder={t('form.companyPh')} value={values.organisation} onChange={set('organisation')} autoComplete="organization" />
         </Field>
         <Field label={t('form.phone')} id="qf-phone" required>
           <input id="qf-phone" type="tel" dir="ltr" className="input tabular" placeholder={t('form.phonePh')} value={values.phone} onChange={set('phone')} required autoComplete="tel" />
@@ -146,7 +164,10 @@ export function QuoteForm({ context, compact = false }) {
           </div>
         </Field>
         <Field label={t('form.size')} id="qf-size">
-          <input id="qf-size" className="input" placeholder={t('form.sizePh')} value={values.size} onChange={set('size')} />
+          <input id="qf-size" className="input" placeholder={t('form.sizePh')} value={values.volumes} onChange={set('volumes')} />
+        </Field>
+        <Field label={t('form.place')} id="qf-place">
+          <input id="qf-place" className="input" placeholder={t('form.placePh')} value={values.place} onChange={set('place')} />
         </Field>
       </div>
 
@@ -191,8 +212,8 @@ export function QuoteForm({ context, compact = false }) {
         <Button type="submit" className="min-w-52">
           {t('form.submit')}
         </Button>
-        <a href={whatsappLink('Bonjour, je souhaite avoir plus d’informations concernant vos produits.')} target="_blank" rel="noopener" className="link-arrow">
-          {t('cta.whatsapp')}
+        <a href={telLink(0)} className="link-arrow">
+          {t('cta.call')} · <span dir="ltr">{company.phones[0].display}</span>
         </a>
       </div>
     </form>

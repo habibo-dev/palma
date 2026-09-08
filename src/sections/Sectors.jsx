@@ -15,7 +15,7 @@ export function Sectors() {
   const activeSector = sectors.find((s) => s.id === active) || sectors[0]
 
   return (
-    <Section id="secteurs" tone="bone">
+    <Section id="pour-qui" tone="bone">
       <SectionHead eyebrow={t('sectors.eyebrow')} title={t('sectors.title')} lead={t('sectors.lead')} />
 
       <div className="mt-12 grid gap-10 lg:grid-cols-12">

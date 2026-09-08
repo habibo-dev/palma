@@ -55,7 +55,7 @@ export function Position() {
               <Reveal as="li" key={p.title} delay={100 + i * 90} className="group bg-shell p-5 transition-colors duration-500 hover:bg-paper">
                 <div className="flex items-center justify-between">
                   <span className="text-[0.6875rem] font-bold tracking-[0.2em] text-moss tabular">{String(i + 1).padStart(2, '0')}</span>
-                  <Icon name={['measure', 'saw', 'layers'][i]} size={18} className="text-stone transition-colors duration-500 group-hover:text-palm" />
+                  <Icon name={['building', 'board', 'wood-metal'][i]} size={18} className="text-stone transition-colors duration-500 group-hover:text-palm" />
                 </div>
                 <h3 className="h4 mt-4">{p.title}</h3>
                 <p className="body-sm mt-2">{p.text}</p>
@@ -67,26 +67,6 @@ export function Position() {
             <LinkArrow to="/a-propos#methode">{t('position.link')}</LinkArrow>
           </Reveal>
         </div>
-      </div>
-    </Section>
-  )
-}
-
-/** Petite variation utilisee sur la page À propos. */
-export function PositionShort() {
-  const { t } = useLang()
-  return (
-    <Section tone="bone" tight>
-      <div className="rule grid gap-6 pt-10 md:grid-cols-3">
-        {t('position.pillars').map((p, i) => (
-          <Reveal key={p.title} delay={i * 80} className="flex gap-3">
-            <Icon name={['measure', 'saw', 'layers'][i]} size={20} className="mt-0.5 shrink-0 text-moss" />
-            <div>
-              <h3 className="h4">{p.title}</h3>
-              <p className="body-sm mt-1">{p.text}</p>
-            </div>
-          </Reveal>
-        ))}
       </div>
     </Section>
   )

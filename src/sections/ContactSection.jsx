@@ -1,50 +1,51 @@
 import { useState } from 'react'
 import { useLang } from '../lib/i18n.jsx'
-import { company, mailLink, telLink, whatsappLink } from '../content/company.js'
 import { faq } from '../content/entities.js'
+import { company, telLink, whatsappLink, whatsappMessages, mailLink } from '../content/company.js'
 import { Icon } from '../components/Icons.jsx'
 import { QuoteForm } from '../components/QuoteForm.jsx'
 import { Reveal, Section, SectionHead } from '../components/UI.jsx'
 
+/** Bloc devis : formulaire + canaux réellement disponibles. */
 export function ContactSection({ withForm = true, context = '' }) {
-  const { t, lang, Ls } = useLang()
+  const { t, lang } = useLang()
+  const emailHref = mailLink()
 
   return (
     <Section id="devis" tone="bone">
-      {company.demo.enabled && (
-        <Reveal className="mb-10">
-          <p className="flex items-start gap-3 rounded-soft border border-clay/25 bg-clay/[0.06] px-4 py-3 text-[0.8125rem] leading-snug text-ink-soft">
-            <Icon name="layers" size={16} className="mt-0.5 shrink-0 text-clay" />
-            <span>
-              <strong className="font-semibold">{Ls(company.demo.label)}</strong> — {t('contact.quickTitle')}: {Ls(company.responseTime)}.
-            </span>
-          </p>
-        </Reveal>
-      )}
-
       <div className="grid gap-12 lg:grid-cols-12 lg:gap-x-12">
         <div className="lg:col-span-5">
-          <SectionHead eyebrow={t('contact.eyebrow')} title={t('contact.title')} lead={t('contact.lead')} size="h1" />
+          <SectionHead eyebrow={t('contact.eyebrow')} title={t('contact.title')} lead={t('contact.lead')} />
 
-          {withForm ? (
-            <Reveal delay={140} className="mt-10">
-              <p className="tag">{t('contact.or')}</p>
-              <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-                <a href={whatsappLink('Bonjour, je souhaite avoir plus d’informations concernant vos produits.')} target="_blank" rel="noopener" className="card card--hover flex items-center justify-between gap-3 bg-paper p-4">
-                  <span className="text-[0.9375rem] font-semibold">{t('cta.whatsapp')}</span>
-                  <Icon name="whatsapp" size={18} className="text-palm" />
+          <Reveal delay={140} className="mt-10">
+            <p className="tag">{t('contact.or')}</p>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+              <a href={whatsappLink(whatsappMessages.quote[lang])} target="_blank" rel="noopener" className="card card--hover flex items-center justify-between gap-3 bg-paper p-4">
+                <span className="text-[0.9375rem] font-semibold">{t('cta.whatsapp')}</span>
+                <Icon name="whatsapp" size={18} className="text-palm" />
+              </a>
+              {company.phones.map((p, i) => (
+                <a key={p.tel} href={telLink(i)} dir="ltr" className="card card--hover flex items-center justify-between gap-3 bg-paper p-4">
+                  <span className="tabular text-[0.9375rem] font-semibold">{p.display}</span>
+                  <span className="flex items-center gap-1.5 text-stone">
+                    <Icon name="phone" size={16} />
+                    <span className="text-[0.6875rem] font-bold uppercase tracking-[0.14em]">{i === 0 ? t('cta.call') : t('cta.callLandline')}</span>
+                  </span>
                 </a>
-                <a href={telLink()} dir="ltr" className="card card--hover flex items-center justify-between gap-3 bg-paper p-4">
-                  <span className="tabular text-[0.9375rem] font-semibold">{company.phone.display}</span>
-                  <Icon name="phone" size={18} className="text-palm" />
-                </a>
-                <a href={mailLink()} dir="ltr" className="card card--hover flex items-center justify-between gap-3 bg-paper p-4">
+              ))}
+              {emailHref ? (
+                <a href={emailHref} dir="ltr" className="card card--hover flex items-center justify-between gap-3 bg-paper p-4">
                   <span className="text-[0.9375rem] font-semibold">{company.email}</span>
                   <Icon name="mail" size={18} className="text-palm" />
                 </a>
-              </div>
-            </Reveal>
-          ) : null}
+              ) : (
+                <p className="flex items-start gap-2.5 rounded-soft border border-dashed border-line bg-shell p-4 text-[0.8125rem] leading-snug text-stone">
+                  <Icon name="mail" size={16} className="mt-0.5 shrink-0 text-moss" />
+                  {t('address.emailPending')}
+                </p>
+              )}
+            </div>
+          </Reveal>
         </div>
 
         <div className="lg:col-span-7">{withForm && <QuoteForm context={context} />}</div>
@@ -53,6 +54,7 @@ export function ContactSection({ withForm = true, context = '' }) {
   )
 }
 
+/** FAQ — réponses sobres, sans engagement commercial inventé. */
 export function Faq() {
   const { t, L } = useLang()
   const [open, setOpen] = useState(0)
@@ -80,13 +82,7 @@ export function Faq() {
                   <Icon name="chevron" size={18} className={`mt-1 shrink-0 text-stone transition-transform duration-500 ${on ? 'rotate-180 text-palm' : ''}`} />
                 </button>
               </h3>
-              <div
-                id={`faq-panel-${i}`}
-                role="region"
-                aria-labelledby={`faq-btn-${i}`}
-                hidden={!on}
-                className="px-5 pb-5"
-              >
+              <div id={`faq-panel-${i}`} role="region" aria-labelledby={`faq-btn-${i}`} hidden={!on} className="px-5 pb-5">
                 <p className="body-sm max-w-2xl border-t border-line pt-4">{copy.a}</p>
               </div>
             </Reveal>

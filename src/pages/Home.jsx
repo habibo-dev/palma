@@ -1,14 +1,14 @@
 import { Seo } from '../components/Seo.jsx'
 import { Hero } from '../sections/Hero.jsx'
 import { Position } from '../sections/Position.jsx'
-import { Collections } from '../sections/Collections.jsx'
+import { Ranges } from '../sections/Ranges.jsx'
 import { Sectors } from '../sections/Sectors.jsx'
 import { Advantages, Materials } from '../sections/Advantages.jsx'
-import { Ambiances } from '../sections/Ambiances.jsx'
+import { Applications } from '../sections/Applications.jsx'
 import { Process } from '../sections/Process.jsx'
 import { CatalogueBand } from '../sections/Catalogue.jsx'
-import { Showroom } from '../sections/Showroom.jsx'
-import { ContactSection } from '../sections/ContactSection.jsx'
+import { Address } from '../sections/Address.jsx'
+import { ContactSection, Faq } from '../sections/ContactSection.jsx'
 import { FinalCta } from '../sections/FinalCta.jsx'
 
 export default function Home() {
@@ -17,15 +17,16 @@ export default function Home() {
       <Seo path="/" />
       <Hero />
       <Position />
-      <Collections />
+      <Ranges />
       <Sectors />
       <Advantages />
       <Materials />
-      <Ambiances />
+      <Applications />
       <Process />
       <CatalogueBand />
-      <Showroom />
+      <Address />
       <ContactSection />
+      <Faq />
       <FinalCta />
     </>
   )

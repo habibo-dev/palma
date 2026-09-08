@@ -1,17 +1,17 @@
 import { lazy, Suspense, useEffect } from 'react'
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { LangProvider, useLang } from './lib/i18n.jsx'
 import { Header } from './components/Header.jsx'
 import { Footer, FloatingContact } from './components/Footer.jsx'
 import Home from './pages/Home.jsx'
 
-const Products = lazy(() => import('./pages/Products.jsx'))
-const ProductDetail = lazy(() => import('./pages/ProductDetail.jsx'))
+const Ranges = lazy(() => import('./pages/Ranges.jsx'))
+const RangeDetail = lazy(() => import('./pages/RangeDetail.jsx'))
 const About = lazy(() => import('./pages/About.jsx'))
 const Contact = lazy(() => import('./pages/Contact.jsx'))
 const NotFound = lazy(() => import('./pages/NotFound.jsx'))
 
-/** Ancrage : remonte en haut sur un nouveau chemin, descend en douceur vers #ancre. */
+/** Ancrage : remonte en haut sur un nouveau chemin, descend vers #ancre sinon. */
 function ScrollManager() {
   const { pathname, hash, key } = useLocation()
   useEffect(() => {
@@ -22,9 +22,9 @@ function ScrollManager() {
       const tryScroll = (attempts = 0) => {
         const el = document.getElementById(id)
         if (el) {
-          const top = el.getBoundingClientRect().top + window.scrollY - (window.innerWidth < 1024 ? 84 : 116)
+          const top = el.getBoundingClientRect().top + window.scrollY - (window.innerWidth < 1024 ? 96 : 132)
           window.scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' })
-        } else if (attempts < 24) {
+        } else if (attempts < 30) {
           raf = requestAnimationFrame(() => tryScroll(attempts + 1))
         }
       }
@@ -34,6 +34,25 @@ function ScrollManager() {
     window.scrollTo({ top: 0, behavior: 'auto' })
   }, [pathname, hash, key])
   return null
+}
+
+function SkipLabel() {
+  const { t } = useLang()
+  return <span>{t('aria.main')}</span>
+}
+
+function PageFallback() {
+  return (
+    <div className="wrap grid min-h-[60vh] place-items-center pt-40">
+      <div className="flex flex-col items-center gap-4 text-stone">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" className="animate-spin" aria-hidden>
+          <circle cx="12" cy="12" r="9" stroke="currentColor" strokeOpacity="0.2" strokeWidth="2" />
+          <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+        <span className="sr-only">…</span>
+      </div>
+    </div>
+  )
 }
 
 function Shell() {
@@ -48,10 +67,13 @@ function Shell() {
         <Suspense fallback={<PageFallback />}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/collections" element={<Products />} />
-            <Route path="/collections/:slug" element={<ProductDetail />} />
+            <Route path="/gammes" element={<Ranges />} />
+            <Route path="/gammes/:slug" element={<RangeDetail />} />
             <Route path="/a-propos" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            {/* URL de la maquette précédente : redirection propre */}
+            <Route path="/collections" element={<Navigate to="/gammes" replace />} />
+            <Route path="/collections/:slug" element={<Navigate to="/gammes" replace />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
@@ -59,25 +81,6 @@ function Shell() {
       <Footer />
       <FloatingContact />
     </>
-  )
-}
-
-function SkipLabel() {
-  const { t } = useLang()
-  return <span>{t('aria.main')}</span>
-}
-
-function PageFallback() {
-  return (
-    <div className="wrap grid min-h-[60vh] place-items-center pt-32">
-      <div className="flex flex-col items-center gap-4 text-stone">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" className="animate-spin" aria-hidden>
-          <circle cx="12" cy="12" r="9" stroke="currentColor" strokeOpacity="0.2" strokeWidth="2" />
-          <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-        </svg>
-        <span className="sr-only">Chargement…</span>
-      </div>
-    </div>
   )
 }
 

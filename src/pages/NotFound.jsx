@@ -14,8 +14,8 @@ export default function NotFound() {
           <p className="body-sm mt-4">{t('notFound.body')}</p>
           <div className="mt-9 flex flex-wrap justify-center gap-3">
             <Button to="/">{t('notFound.cta')}</Button>
-            <Button variant="ghost" to="/collections">
-              {t('cta.collections')}
+            <Button variant="ghost" to="/gammes">
+              {t('cta.ranges')}
             </Button>
           </div>
         </div>

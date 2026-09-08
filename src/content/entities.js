@@ -1,466 +1,419 @@
-/** Materiaux & finitions — nuancier presenté au showroom. */
-export const materials = [
-  {
-    id: 'chene',
-    texture: '/images/material-01.jpg',
-    tint: '#cdae7e',
-    fr: { name: 'Chêne huilé', text: 'Veinage franc, finition huilée mate qui se ravive.' },
-    ar: { name: 'بلوط مزيّت', text: 'عروق واضحة ولمسة نهائية زيتية غير لامعة.' },
-    en: { name: 'Oiled oak', text: 'Straight grain, matte oiled finish that can be refreshed.' },
-  },
-  {
-    id: 'noyer',
-    texture: '/images/material-01.jpg',
-    tint: '#6b4a30',
-    fr: { name: 'Noyer teinté', text: 'Fond chaud, profond, pour les pièces de réception.' },
-    ar: { name: 'جوز مصبوغ', text: 'درجات دافئة وعميقة لصالونات الاستقبال.' },
-    en: { name: 'Stained walnut', text: 'Warm, deep tone for reception pieces.' },
-  },
-  {
-    id: 'frene',
-    texture: '/images/material-01.jpg',
-    tint: '#d9c8a8',
-    fr: { name: 'Frêne clair', text: 'Léger et lumineux, idéal pour les bureaux.' },
-    ar: { name: 'دردار فاتح', text: 'خفيف ومضيء، مناسب للمكاتب.' },
-    en: { name: 'Light ash', text: 'Light and bright, best for workspaces.' },
-  },
-  {
-    id: 'rotin',
-    texture: '/images/material-02.jpg',
-    tint: '#d8bf95',
-    fr: { name: 'Rotin tressé', text: 'Tressage main, laisse passer l’air et la lumière.' },
-    ar: { name: 'خيزران مضفور', text: 'ضفر يدوي يمرّر الهواء والضوء.' },
-    en: { name: 'Woven rattan', text: 'Hand-woven; lets air and light through.' },
-  },
-  {
-    id: 'cannage',
-    texture: '/images/material-02.jpg',
-    tint: '#c2a97f',
-    fr: { name: 'Cannage', text: 'Fonds de caisses et panneaux muraux ajourés.' },
-    ar: { name: 'قضبان مفرغة', text: 'خلفيات الخزائن والألواح الجدارية.' },
-    en: { name: 'Cane webbing', text: 'Drawer backs and open wall panels.' },
-  },
-  {
-    id: 'lin',
-    texture: '/images/material-03.jpg',
-    tint: '#cfc4b0',
-    fr: { name: 'Lin lavé', text: 'Housses déhoussables, teintures naturelles.' },
-    ar: { name: 'كتان مغسول', text: 'أغطية قابلة للإزالة وأصباغ طبيعية.' },
-    en: { name: 'Washed linen', text: 'Removable covers, natural dye lots.' },
-  },
-  {
-    id: 'laine',
-    texture: '/images/material-03.jpg',
-    tint: '#a8977c',
-    fr: { name: 'Laine bouclée', text: 'Assises et têtes de lit, tissu à usage intensif.' },
-    ar: { name: 'صوف ممجدل', text: 'لمقاعد ورؤوس الأسرّة، قماش متين.' },
-    en: { name: 'Bouclé wool', text: 'Seats and headboards, heavy-duty cloth.' },
-  },
-  {
-    id: 'acier',
-    texture: '/images/material-04.jpg',
-    tint: '#3b3a35',
-    fr: { name: 'Acier thermolaqué', text: 'Piétements fins, noir mat ou vert profond.' },
-    ar: { name: 'فولاذ مطلي', text: 'قواعد رفيعة، أسود مطفي أو أخضر داكن.' },
-    en: { name: 'Powder-coated steel', text: 'Slim bases, matte black or deep green.' },
-  },
-]
+/**
+ * Contenus éditoriaux PALMA MEUBLE.
+ * Aucun chiffre, aucune référence client, aucune certification : uniquement des
+ * positions de travail et des capacités déclarées par l'entreprise.
+ */
 
-/** Secteurs d'application — chaque carte pose un probleme reel. */
+/** Profils d'acheteurs — chaque bloc part du problème de l'acheteur, pas du produit. */
 export const sectors = [
   {
-    id: 'bureaux',
-    image: '/images/ambiance-01.jpg',
+    id: 'entreprises',
+    image: '/images/range-01.jpg',
     fr: {
-      name: 'Bureaux & espaces de travail',
-      problem: 'Des plateaux mal zonés, câbles apparents, assises de récupération.',
-      text: 'Zonage du plateau, postes assis-debout, salles de réunion insonorisées et vestiaires. Le mobilier est dimensionné sur place, pas au catalogue.',
+      name: 'Entreprises & bureaux',
+      problem: 'Un plateau à équiper ou à rénover sans arrêter l’activité.',
+      text: 'Postes de travail, sièges, rangements et salle de réunion commandés ensemble, livrés par tranches et montés en horaires décalés. Le devis est établi poste par poste pour arbitrer sans tout changer.',
     },
     ar: {
-      name: 'مكاتب وفضاءات عمل',
-      problem: 'مساحات غير مقسّمة، أسلاك ظاهرة، كراسي غير مريحة.',
-      text: 'تقسيم الفضاء، مكاتب وقوف-جلوس، قاعات اجتماعات عازلة للصوت وخزائن.',
+      name: 'المقاولات والمكاتب',
+      problem: 'تجهيز أو تجديد فضاء عمل دون إيقاف النشاط.',
+      text: 'مناصب عمل، مقاعد، خزائن وقاعة اجتماعات تُطلب دفعة واحدة، وتُسلَّم على دفعات مع تركيب في أوقات مدروسة.',
     },
     en: {
-      name: 'Offices & workplaces',
-      problem: 'Poorly zoned floors, exposed cabling, borrowed seating.',
-      text: 'Floor zoning, sit-stand desks, quiet meeting rooms and lockers. Furniture sized on site, not from a catalogue.',
+      name: 'Companies & offices',
+      problem: 'A floor to fit out or renew without stopping work.',
+      text: 'Workstations, seating, storage and a meeting room ordered together, delivered in tranches and installed outside core hours. The quote is priced per workstation so you can arbitrate without redesigning.',
     },
   },
   {
-    id: 'cafes',
-    image: '/images/ambiance-02.jpg',
+    id: 'administrations',
+    image: '/images/range-04.jpg',
     fr: {
-      name: 'Cafés, restos & salons de thé',
-      problem: 'Turnover élevé, mobilier qui ne tient pas un service.',
-      text: 'Banquettes au mur, tables à plateau résistant, chaises empilables. On pense le plan de salle pour rentabiliser chaque mètre carré.',
+      name: 'Administrations & collectivités',
+      problem: 'Des guichets sollicités toute la journée et des archives qui s’accumulent.',
+      text: 'Comptoirs et sièges d’attente conçus pour le public, armoires de classement et rayonnages métalliques pour les archives. Le même article est repris à l’identique d’une extension à l’autre.',
     },
     ar: {
-      name: 'مقاهي ومطاعم',
-      problem: 'ضغط كبير على التجهيز ومواد لا تتحمّل الخدمة.',
-      text: 'كنبات على الجدار، طاولات متينة، كراسي قابلة للتكديس. دراسة توزيع الطاولات لتحسين كل متر مربع.',
+      name: 'الإدارات والجماعات',
+      problem: 'شبابيك تعمل طوال اليوم وأرشيف يتراكم.',
+      text: 'طاولات استقبال ومقاعد انتظار مصمّمة للعموم، وخزائن وأرفف معدنية للأرشيف، تُعاد بنفس المواصفات في كل توسعة.',
     },
     en: {
-      name: 'Cafés, restaurants & tea rooms',
-      problem: 'High turnover, furniture that fails within a season.',
-      text: 'Wall banquettes, hard-wearing table tops, stackable chairs. We plan the room to earn back every square metre.',
+      name: 'Public administration',
+      problem: 'Counters busy all day and archives that keep growing.',
+      text: 'Public counters and waiting seating built for traffic, filing cupboards and metal shelving for archives. The same item is repeated identically from one extension to the next.',
     },
   },
   {
-    id: 'hotels',
-    image: '/images/ambiance-03.jpg',
+    id: 'scolaire',
+    image: '/images/range-06.jpg',
     fr: {
-      name: 'Hôtellerie & résidences',
-      problem: 'Chambres à meubler en série, entretiens fréquents.',
-      text: 'Têtes de lit, bureaux, bagagers et minibars fabriqués en série avec un gabarit unique, pour que chaque chambre soit identique à la livraison.',
+      name: 'Établissements scolaires',
+      problem: 'Des salles hétérogènes, des niveaux différents, une rentrée à tenir.',
+      text: 'Tables-élèves et pupitres choisis par niveau, mobilier des enseignants et salles spécialisées assortis. Nous chiffrons classe par classe, ce qui permet d’avancer bâtiment par bâtiment.',
     },
     ar: {
-      name: 'فنادق وإقامات',
-      problem: 'غرف كثيرة يجب تجهيزها بنفس الجودة.',
-      text: 'رؤوس أسرّة، مكاتب، حاملات حقائب وثلاجات صغيرة تُصنع ب نموذج موحّد.',
+      name: 'المؤسسات التعليمية',
+      problem: 'أقسام غير متجانسة ومستويات مختلفة وموعد دخول مدرسي.',
+      text: 'طاولات ومقاعد مختارة حسب المستوى، وأثاث الأساتذة والقاعات المتخصصة. التسعير لكل قسم يسمح بالتقدّم مبنى بمبنى.',
     },
     en: {
-      name: 'Hotels & serviced residences',
-      problem: 'Rooms to furnish in series, constant upkeep.',
-      text: 'Headboards, desks, luggage racks and minis bars built from one master template so every room matches on handover.',
+      name: 'Schools & institutes',
+      problem: 'Mixed rooms, different grade levels, one school year to hold.',
+      text: 'Pupil desks and chair-desks matched by level, with staff and specialist-room furniture to suit. Priced room by room so you can move building by building.',
     },
   },
   {
-    id: 'commerce',
-    image: '/images/ambiance-04.jpg',
+    id: 'universites',
+    image: '/images/apply-01.jpg',
     fr: {
-      name: 'Commerce & retail',
-      problem: 'Un parcours client qui ne met rien en valeur.',
-      text: 'Comptoirs, présentoirs, cabines, éclairage intégré des niches. Le mobilier devient l’outil de vente, pas son décor.',
+      name: 'Universités & institutions',
+      problem: 'Amphis, bibliothèques de travail et foyers à équiper en volume.',
+      text: 'Pupitres d’amphithéâtre, tables de lecture, sièges en rangée et mobilier de résidence universitaire. Les quantités imposent une livraison échelonnée et un montage par salle.',
     },
     ar: {
-      name: 'محلات ونقاط بيع',
-      problem: 'مسار زبون لا يبرز المنتوج.',
-      text: 'مكاتب استقبال، رفوف عرض، غرف قياس، إضاءة مدمجة. الأثاث يصبح أداة بيع.',
+      name: 'الجامعات والمؤسسات',
+      problem: 'مدرجات وقاعات مطالعة وأحياء جاموية تحتاج تجهيزًا ضخمًا.',
+      text: 'مقاعد مدرّجات، طاولات قراءة، كراسي في صفوف وأثاث الإقامات الجامعية، مع تسليم مجدول وتركيب لكل قاعة.',
     },
     en: {
-      name: 'Retail & showrooms',
-      problem: 'A customer path that flatters nothing.',
-      text: 'Counters, display units, fitting rooms, lit niches. Furniture as the selling tool, not the backdrop.',
-    },
-  },
-  {
-    id: 'residentiel',
-    image: '/images/ambiance-05.jpg',
-    fr: {
-      name: 'Habitat privé',
-      problem: 'Meubles standard qui laissent des vides de 12 cm.',
-      text: 'Bibliothèques au plafond, dressings d’angle, tables familiales, mobilier d’entrée. Chaque centimètre du plan est exploité.',
-    },
-    ar: {
-      name: 'سكن خاص',
-      problem: 'أثاث جاهز يترك فراغات غير مستغلة.',
-      text: 'مكتبات حتى السقف، خزائن الزوايا، طاولات عائلية، أثاث المدخل.',
-    },
-    en: {
-      name: 'Private homes',
-      problem: 'Standard units that leave 12 cm gaps everywhere.',
-      text: 'Ceiling-high libraries, corner wardrobes, family tables, entry furniture. Every centimetre of the plan gets used.',
+      name: 'Universities & institutions',
+      problem: 'Lecture halls, study libraries and residences to furnish at volume.',
+      text: 'Lecture-hall tablet chairs, reading tables, row seating and residence furniture. Volumes call for scheduled delivery and install room by room.',
     },
   },
 ]
 
-/** Pourquoi Palma — uniquement des capacites, aucun chiffre non verifie. */
+/** Ce que l'entreprise affirme : fabrication + distribution + suivi de projet. */
 export const advantages = [
   {
-    icon: 'measure',
+    icon: 'factory',
     fr: {
-      title: 'Le métré avant le plan',
-      text: 'Nous venons mesurer les murs, les prises, les seuils et la lumière. Ce qui est validé au métré ne change plus en atelier.',
+      title: 'Fabricant et distributeur',
+      text: 'Nous fabriquons les gammes courantes et complétons par un approvisionnement adapté quand un projet sort de la série. Un seul interlocuteur pour les deux volets.',
     },
     ar: {
-      title: 'القياس قبل التصميم',
-      text: 'نأتي لقياس الجدران والمقابس والمستويات والإضاءة. ما يُعتمد في القياس لا يتغيّر في الورشة.',
+      title: 'مصنّع وموزّع',
+      text: 'نصنع التشكيلات الجارية ونكمل بما يلزم خارجها عند حاجة المشروع. جهة واحدة تتابع الجانبين.',
     },
     en: {
-      title: 'Measured before drawn',
-      text: 'We come and record walls, sockets, thresholds and light. What is signed off on site does not change at the bench.',
-    },
-  },
-  {
-    icon: 'tool',
-    fr: {
-      title: 'Un atelier, pas un revendeur',
-      text: 'Coupe, assemblage, tapisserie et finitions sortent du même lieu : un seul planning, une seule responsabilité.',
-    },
-    ar: {
-      title: 'ورشة، لا محل بيع',
-      text: 'القص والتجميع والتنجيد والتشطيب تخرج من نفس المكان: جدول واحد ومسؤولية واحدة.',
-    },
-    en: {
-      title: 'A workshop, not a reseller',
-      text: 'Cutting, joinery, upholstery and finishing leave the same building: one schedule, one responsibility.',
+      title: 'Manufacturer and distributor',
+      text: 'We build the standard ranges and source around them when a project steps outside the series. One contact covers both.',
     },
   },
   {
     icon: 'layers',
     fr: {
-      title: 'Matériaux documentés',
-      text: 'Essence, provenance du panneau, type de tissu et finition sont écrits sur le devis. Vous savez ce que vous achetez.',
+      title: 'Devis décomposé par lot',
+      text: 'Un lot par nature d’ouvrage et par salle, avec quantités et désignations. Le document se lit tel quel en commission, en interne comme pour une consultation.',
     },
     ar: {
-      title: 'مواد موثّقة',
-      text: 'نوع الخشب ومصدره والقماش والتشطيب تُكتب في العرض السعر. تعرف تمامًا ما تشتريه.',
+      title: 'عرض سعر مفصّل بالدفعات',
+      text: 'دفعة لكل طبيعة عمل ولكل قاعة مع الكميات والتعيينات. الوثيقة تُقرأ مباشرة داخل اللجنة أو في طلب عرض.',
     },
     en: {
-      title: 'Documented materials',
-      text: 'Timber species, board source, fabric type and finish are written into the quote. You know what you are buying.',
+      title: 'Quote broken down by lot',
+      text: 'One lot per type of work and per room, with quantities and descriptions. The document reads as-is in committee, internal or tendered.',
     },
   },
   {
-    icon: 'hand',
+    icon: 'wood-metal',
     fr: {
-      title: 'La pose par nos équipes',
-      text: 'Nos équipes livrent, montent, ajustent et repartent avec les chutes. Vous récupérez la pièce prête à être vécue.',
+      title: 'Bois et métal dans la même commande',
+      text: 'Mobilier de bureau en bois, vestiaires et archives en métal : une commande, une livraison, un montage, une réception.',
     },
     ar: {
-      title: 'التركيب من طرفنا',
-      text: 'فريقنا يوصل ويركب ويعدّل وينظّف. تستلم المكان جاهزًا للاستعمال.',
+      title: 'الخشب والمعدن في طلب واحد',
+      text: 'أثاث مكتبي خشبي وخزائن وأرشيف معدني: طلب واحد، تسليم واحد، تركيب واحد.',
     },
     en: {
-      title: 'Installed by our own crew',
-      text: 'Our team delivers, assembles, adjusts and takes the packing away. You get a room that is simply ready.',
+      title: 'Wood and metal on one order',
+      text: 'Timber office furniture and steel lockers or archives: one order, one delivery, one install, one handover.',
     },
   },
   {
-    icon: 'repair',
+    icon: 'measure',
     fr: {
-      title: 'Réparable par design',
-      text: 'Tressage, coussins et habillages se refont sans jeter le bâti. Une chaise de dix ans se remet à neuf.',
+      title: 'Étude sur place avant chiffrage',
+      text: 'Relevé des salles, des passages et des réservations avant le devis. Ce qui est validé sur place ne change plus en atelier.',
     },
     ar: {
-      title: 'قابل للإصلاح بالتصميم',
-      text: 'الضفر والوسائد والأغطية يمكن تجديدها دون تغيير الهيكل.',
+      title: 'دراسة في المكان قبل التسعير',
+      text: 'قياس القاعات والممرات قبل إعداد العرض. ما يُعتمد في المكان لا يتغيّر في الورشة.',
     },
     en: {
-      title: 'Repairable by design',
-      text: 'Weave, cushions and covers can be redone without discarding the frame. A ten-year-old chair comes back new.',
+      title: 'Surveyed before it is priced',
+      text: 'Rooms, access routes and clearances recorded before the quote. What is signed off on site does not change in the plant.',
     },
   },
   {
-    icon: 'clock',
+    icon: 'truck',
     fr: {
-      title: 'Un devis lisible',
-      text: 'Prix par lot, délais annoncés poste par poste, et ce qui n’est pas compris écrit noir sur blanc.',
+      title: 'Livraison sur site et montage',
+      text: 'Livraison par tranches selon votre planning, montage et réglages assurés par nos équipes, enlèvement des emballages.',
     },
     ar: {
-      title: 'عرض سعر واضح',
-      text: 'سعر لكل دفعة، آجال مبيّنة، وما ليس مشمولًا مكتوب بوضوح.',
+      title: 'التسليم والتركيب في المكان',
+      text: 'تسليم على دفعات حسب برنامجكم، تركيب وضبط من طرف فرقنا، ورفع مواد التغليف.',
     },
     en: {
-      title: 'A quote you can read',
-      text: 'Price per lot, lead time per line, and what is excluded stated in plain terms.',
+      title: 'Site delivery and assembly',
+      text: 'Delivered in tranches to your schedule, assembled and adjusted by our crews, packing taken away.',
+    },
+  },
+  {
+    icon: 'archive',
+    fr: {
+      title: 'Références reproductibles',
+      text: 'Une fois une référence validée, elle est reprise à l’identique sur les commandes suivantes — utile pour équiper un deuxième bâtiment dans dix-huit mois.',
+    },
+    ar: {
+      title: 'مراجع قابلة للتكرار',
+      text: 'المرجع المعتمد يُعاد بنفس المواصفات في الطلبيات اللاحقة — مفيد عند تجهيز مبنى ثانٍ بعد سنة ونصف.',
+    },
+    en: {
+      title: 'Repeatable references',
+      text: 'Once a reference is approved it is reproduced identically on later orders — useful for the second building in eighteen months.',
     },
   },
 ]
 
-/** Processus — etapes numerotees. */
-export const process = [
+/** Deux familles de matières : ce que ces familles signifient sur un usage pro. */
+export const materials = [
   {
-    fr: {
-      title: 'Prise de contact',
-      text: 'Un appel, un message WhatsApp ou une visite au showroom. Vous envoyez photos, plan ou simples mesures de la pièce.',
-      step: '1 à 2 jours',
-    },
-    ar: {
-      title: 'أول تواصل',
-      text: 'اتصال أو رسالة واتساب أو زيارة المعرض. ترسل صورًا أو مخططًا أو قياسات المكان.',
-      step: '1–2 أيام',
-    },
-    en: {
-      title: 'First contact',
-      text: 'A call, a WhatsApp message or a showroom visit. You send photos, plans or simply the room’s measurements.',
-      step: '1–2 days',
-    },
+    id: 'plateaux',
+    texture: '/images/material-01.jpg',
+    tint: '#c8b393',
+    fr: { name: 'Plateaux & corps en bois', text: 'Surfaces de travail, caissons et habillages ; chants protégés pour les usages collectifs.' },
+    ar: { name: 'أسطح وأجسام خشبية', text: 'مقاعد العمل والخزائن والأغطية مع حواف محمية للاستعمال الجماعي.' },
+    en: { name: 'Wood tops & cases', text: 'Work surfaces, pedestals and panelling, with edges protected for shared use.' },
   },
   {
-    fr: {
-      title: 'Visite & métrés',
-      text: 'Relevé sur place à Alger et environs : dimensions, contraintes, prises, passages de livraison.',
-      step: 'Sur rendez-vous',
-    },
-    ar: {
-      title: 'الزيارة والقياس',
-      text: 'قياس في المكان بالجزائر والمناطق القريبة: الأبعاد، المنافذ، ممرات الإدخال.',
-      step: 'بموعد',
-    },
-    en: {
-      title: 'Site visit & measures',
-      text: 'On-site survey in Algiers and nearby: dimensions, constraints, sockets, delivery routes.',
-      step: 'By appointment',
-    },
+    id: 'structures',
+    texture: '/images/material-02.jpg',
+    tint: '#8d949b',
+    fr: { name: 'Structures & piètements', text: 'Piétements et traverses métalliques : stabilité sur sol inégal, reprise de niveau en cours de montage.' },
+    ar: { name: 'الهياكل والقواعد', text: 'قواعد وعوارض معدنية: ثبات على الأرض غير المستوية وضبط الارتفاع أثناء التركيب.' },
+    en: { name: 'Frames & legs', text: 'Metal legs and rails: stable on uneven floors, levelled during assembly.' },
   },
   {
-    fr: {
-      title: 'Esquisse & devis',
-      text: 'Plan d’implantation, choix des essences et tissus, devis chiffré par lot avec délais. Modifications incluses avant lancement.',
-      step: 'Une semaine type',
-    },
-    ar: {
-      title: 'التصميم والعرض المالي',
-      text: 'مخطط التوزيع، اختيار الأخشاب والأقمشة، وعرض سعر مفصّل مع الآجال.',
-      step: 'أسبوع تقني',
-    },
-    en: {
-      title: 'Sketch & quote',
-      text: 'Layout plan, timber and fabric selection, itemised quote with lead times. Revisions included before release.',
-      step: 'Typically one week',
-    },
+    id: 'metal',
+    texture: '/images/material-03.jpg',
+    tint: '#6e767e',
+    fr: { name: 'Mobilier métallique', text: 'Vestiaires, casiers, armoires de classement et rayonnages — les volumes qui encaissent le passage continu.' },
+    ar: { name: 'أثاث معدني', text: 'خزائن شخصية وأدراج ملفات وأرفف — الأحجام التي تتحمّل الاستعمال المستمر.' },
+    en: { name: 'Metal furniture', text: 'Lockers, filing and shelving — the volumes that take continuous traffic.' },
   },
   {
-    fr: {
-      title: 'Fabrication',
-      text: 'Lancement en atelier, contrôle à chaque poste, photos d’avancement envoyées avant la livraison.',
-      step: 'Annoncé au devis',
-    },
-    ar: {
-      title: 'الصنع',
-      text: 'إنتاج في الورشة، مراقبة عند كل مرحلة، وصور تقدم تُرسل قبل التسليم.',
-      step: 'حسب العرض',
-    },
-    en: {
-      title: 'Fabrication',
-      text: 'Released to the shop floor, checked at each station, progress photos sent before delivery.',
-      step: 'As quoted',
-    },
-  },
-  {
-    fr: {
-      title: 'Livraison & pose',
-      text: 'Montage sur place, réglages, nettoyage, remise d’un carnet d’entretien des finitions.',
-      step: 'Journée dédiée',
-    },
-    ar: {
-      title: 'التسليم والتركيب',
-      text: 'تركيب في المكان، ضبط، تنظيف، وتسليم دليل العناية بالتشطيبات.',
-      step: 'يوم مخصص',
-    },
-    en: {
-      title: 'Delivery & install',
-      text: 'Assembled on site, adjusted, cleaned, and a finish-care sheet handed over.',
-      step: 'Dedicated day',
-    },
+    id: 'assises',
+    texture: '/images/material-04.jpg',
+    tint: '#4c5560',
+    fr: { name: 'Assises & habillages', text: 'Mousses, habillages et mécaniques choisis selon la durée de présence au poste, du visiteur à l’opérateur.' },
+    ar: { name: 'المقاعد والتنجيد', text: 'إسفنج وأقمشة وآليات تُختار حسب مدة الجلوس، من الزائر إلى الموظف.' },
+    en: { name: 'Seating & covers', text: 'Foams, covers and mechanisms selected by hours-in-seat, from visitor to operator.' },
   },
 ]
 
 /**
- * Ambiances & mises en situation.
- * ⚠️ Section volontairement presentee comme des references de style :
- * les photos de reales livraisons clients sont ajoutrees des qu'elles sont autorisees.
+ * Applications — et non « réalisations » : nous n'affichons aucune référence
+ * client tant qu'elle n'est pas autorisée par l'entreprise.
  */
 export const ambiances = [
   {
-    image: '/images/ambiance-01.jpg',
+    image: '/images/hero-01.jpg',
     span: 'wide',
-    fr: { title: 'Plateau de travail, Alger Centre', text: 'Chêne clair, cannage et feutre acoustique.' },
-    ar: { title: 'فضاء عمل — وسط العاصمة', text: 'بلوط فاتح، قضبان ولباد عازل.' },
-    en: { title: 'Open floor, central Algiers', text: 'Light oak, cane webbing and acoustic felt.' },
+    fr: { title: 'Open space & bureaux attitrés', text: 'Postes alignés, retours de table, rangements au même nuancier.' },
+    ar: { title: 'مكاتب مفتوحة ومناصب فردية', text: 'مناصب مصطفّة وأسطح جانبية وخزائن بنفس السلسلة.' },
+    en: { title: 'Open floor & private offices', text: 'Aligned stations, table returns, storage in one shade range.' },
   },
   {
-    image: '/images/ambiance-02.jpg',
+    image: '/images/range-04.jpg',
+    span: 'square',
+    fr: { title: 'Guichet et salle d’attente', text: 'Comptoir, partie abaissée, sièges en rangée faciles à nettoyer.' },
+    ar: { title: 'شباك وقاعة انتظار', text: 'طاولة استقبال، جزء منخفض، ومقاعد صفوف سهلة التنظيف.' },
+    en: { title: 'Counter & waiting hall', text: 'Counter, lowered section, wipe-clean row seating.' },
+  },
+  {
+    image: '/images/range-06.jpg',
     span: 'tall',
-    fr: { title: 'Terrasse ombragée', text: 'Rotin synthétique, lin lavé, sol en pierre.' },
-    ar: { title: 'تراس مظلّل', text: 'خيزران صناعي، كتان مغسول وأرضية حجرية.' },
-    en: { title: 'Shaded terrace', text: 'Synthetic rattan, washed linen, stone floor.' },
+    fr: { title: 'Salle de classe', text: 'Tables-élèves par niveau, pupitre enseignant, circulation avant le tableau.' },
+    ar: { title: 'قسم دراسي', text: 'طاولات حسب المستوى، مقعد الأستاذ، وممر أمام السبورة.' },
+    en: { title: 'Classroom', text: 'Desks by level, teacher station, clear aisle to the board.' },
   },
   {
-    image: '/images/ambiance-03.jpg',
+    image: '/images/apply-01.jpg',
     span: 'square',
-    fr: { title: 'Coin lecture, lumière de fin de journée', text: 'Fauteuil tressé, lin lavé, ombre portée au mur.' },
-    ar: { title: 'ركن قراءة — ضوء آخر النهار', text: 'كرسي مضفور، كتان مغسول وظل على الجدار.' },
-    en: { title: 'Reading corner, late light', text: 'Woven chair, washed linen, shadow raked on the wall.' },
+    fr: { title: 'Bibliothèque de travail', text: 'Tables de lecture longues, sièges silencieux, rayonnages bas.' },
+    ar: { title: 'قاعة مطالعة', text: 'طاولات قراءة طويلة، مقاعد صامتة وأرفف منخفضة.' },
+    en: { title: 'Study library', text: 'Long reading tables, quiet chairs, low shelving.' },
   },
   {
-    image: '/images/ambiance-04.jpg',
-    span: 'square',
-    fr: { title: 'Comptoir de boutique', text: 'Noyer, laiton, niches éclairées.' },
-    ar: { title: 'طاولة متجر', text: 'جوز ونحاس ورفوف مضيئة.' },
-    en: { title: 'Boutique counter', text: 'Walnut, brass and lit niches.' },
-  },
-  {
-    image: '/images/ambiance-05.jpg',
+    image: '/images/range-07.jpg',
     span: 'wide',
-    fr: { title: 'Salon familial', text: 'Banquette d’angle, table noyer, bibliothèque au plafond.' },
-    ar: { title: 'صالون عائلي', text: 'كنبة زاوية، طاولة جوز ومكتبة حتى السقف.' },
-    en: { title: 'Family living room', text: 'Corner bench, walnut table, ceiling-high library.' },
+    fr: { title: 'Vestiaires & locaux techniques', text: 'Casiers métalliques aérés, bancs, meuble à clés — le mobilier qui ne se voit pas et ne tombe pas.' },
+    ar: { title: 'خزائن شخصية ومحلات تقنية', text: 'خزائن معدنية مهواة، مقاعد ومفاتيح — الأثاث الذي لا يُرى ولا يتعطّل.' },
+    en: { title: 'Lockers & technical rooms', text: 'Ventilated steel bays, benches, key cabinets — the furniture nobody notices and nothing breaks.' },
   },
 ]
 
-/** Questions frequentes — reponses honnetes, sans engagement invente. */
+/** Le déroulé commercial d'un projet B2B, sans délai inventé. */
+export const process = [
+  {
+    fr: {
+      title: 'Cahier des besoins',
+      text: 'Vous envoyez la liste des salles ou le bordereau existant. À défaut de plan, un relevé sur place suffit à démarrer.',
+      step: 'Gratuit',
+    },
+    ar: {
+      title: 'دفتر الاحتياجات',
+      text: 'ترسلون قائمة القاعات أو الجدول الموجود. وعند غياب المخطط يكفي قياس في المكان.',
+      step: 'بالمجان',
+    },
+    en: {
+      title: 'Requirements list',
+      text: 'You send the room schedule or your existing bill of quantities. Without a plan, a site survey is enough to start.',
+      step: 'No charge',
+    },
+  },
+  {
+    fr: {
+      title: 'Sélection & échantillons',
+      text: 'Gammes proposées par usage, nuances et habillages présentés, articles hors série recherchés si nécessaire.',
+      step: 'Sur place ou au bureau',
+    },
+    ar: {
+      title: 'الاختيار والنماذج',
+      text: 'تشكيلات مقترحة حسب الاستعمال، مع عرض الألوان والتنجيد والبحث عن المواد خارج السلسلة عند الحاجة.',
+      step: 'في المكان أو لدينا',
+    },
+    en: {
+      title: 'Selection & samples',
+      text: 'Ranges proposed by use, shades and covers presented, non-series items sourced where needed.',
+      step: 'On site or at our office',
+    },
+  },
+  {
+    fr: {
+      title: 'Devis par lot',
+      text: 'Quantitatif salle par salle, prix unitaire et par lot, options séparées. Documents complémentaires fournis sur demande pour votre dossier.',
+      step: 'Écrit',
+    },
+    ar: {
+      title: 'عرض السعر بالدفعات',
+      text: 'كميات لكل قاعة، سعر للوحدة وللدفعة، مع فصل الخيارات. والوثائق المكمّلة تُوفَّر عند الطلب لملفكم.',
+      step: 'مكتوب',
+    },
+    en: {
+      title: 'Quote by lot',
+      text: 'Room-by-room quantities, unit and lot prices, options kept separate. Supporting documents supplied on request for your file.',
+      step: 'In writing',
+    },
+  },
+  {
+    fr: {
+      title: 'Fabrication & approvisionnement',
+      text: 'Lancement en production pour ce qui est fabriqué, approvisionnement pour le reste, avec un point d’avancement communiqué.',
+      step: 'Selon planning',
+    },
+    ar: {
+      title: 'التصنيع والتزوّد',
+      text: 'إطلاق الإنتاج لما يُصنع لدى المؤسسة، وتزوّد لما تبقى، مع إعلام مستمر بالحالة.',
+      step: 'حسب البرنامج',
+    },
+    en: {
+      title: 'Manufacture & procurement',
+      text: 'In-house items released to production, the rest procured, with a progress note issued as it moves.',
+      step: 'To schedule',
+    },
+  },
+  {
+    fr: {
+      title: 'Livraison, montage, réception',
+      text: 'Livraison par tranches, montage et réglages, puis procès-verbal de réception avec les références reprises pour les commandes suivantes.',
+      step: 'Sur site',
+    },
+    ar: {
+      title: 'التسليم والتركيب والاستلام',
+      text: 'تسليم على دفعات، تركيب وضبط، ثم محضر استلام بالمراجع المعتمدة للطلبيات القادمة.',
+      step: 'في المكان',
+    },
+    en: {
+      title: 'Delivery, assembly, handover',
+      text: 'Tranche deliveries, assembly and adjustment, then a handover record with the references kept for reorders.',
+      step: 'On site',
+    },
+  },
+]
+
 export const faq = [
   {
     fr: {
+      q: 'Établissez-vous un devis pour un marché ou une consultation ?',
+      a: 'Oui. Nous produisons un devis descriptif et quantitatif par lot, avec désignations et volumes séparés. Les pièces administratives demandées sont fournies sur demande ; dites-nous simplement lequel de vos documents nous devons compléter.',
+    },
+    ar: {
+      q: 'هل تعدّون عرض سعر لصفقة أو استشارة؟',
+      a: 'نعم. نُصدر عرض سعر وصفيًا وكمّيًا لكل دفعة، بتعيينات وكميات مفصولة. والوثائق الإدارية المطلوبة تُوفَّر عند الطلب.',
+    },
+    en: {
+      q: 'Do you quote for a tender or consultation?',
+      a: 'Yes. We issue a descriptive, quantified quote by lot with separated descriptions and volumes. Requested administrative documents are supplied on ask — just tell us which form must be completed.',
+    },
+  },
+  {
+    fr: {
       q: 'Publiez-vous des prix en ligne ?',
-      a: 'Non. Chaque pièce étant fabriquée au format et dans la finition que vous choisissez, le prix dépend du bois, du tissu et du lieu de pose. Le devis détaillé par lot vous est envoyé après le relevé.',
+      a: 'Non. Le prix dépend du volume, de la finition et du lieu de livraison. Un tarif publié hors contexte serait une erreur pour vous comme pour nous : le devis chiffré sur votre liste est le seul document fiable.',
     },
     ar: {
       q: 'هل تنشرون الأسعار؟',
-      a: 'لا. بما أن كل قطعة تُصنع بالمقاس والتشطيب الذي تختاره، فإن السعر يعتمد على الخشب والقماش ومكان التركيب. يصلك عرض سعر مفصّل بعد القياس.',
+      a: 'لا. السعر مرتبط بالكمية والتشطيب ومكان التسليم. نشر سعر خارج هذا السياق يضرّ الطرفين، ولهذا يُسلَّم عرض سعر على قائمتكم.',
     },
     en: {
       q: 'Do you publish prices?',
-      a: 'No. Each piece is built to your size and finish, so price follows timber, fabric and install location. An itemised quote follows the site survey.',
+      a: 'No. Price follows volume, finish and delivery point. A published rate out of context would mislead both sides, so the priced quote against your list is the only document we issue.',
     },
   },
   {
     fr: {
-      q: 'Quel est le délai moyen ?',
-      a: 'Il dépend des volumes et des approvisionnements du moment, c’est pourquoi il est écrit sur chaque devis plutôt qu’annoncé en moyenne. Un projet de quelques pièces et un plateau de 40 postes n’ont pas le même calendrier.',
+      q: 'Livrez-vous en dehors de Constantine ?',
+      a: 'Nous sommes basés à la Zone Industrielle Palma, à Constantine, et nous livrons sur site. Pour un projet hors de la région, la logistique est étudiée et chiffrée avec le devis.',
     },
     ar: {
-      q: 'ما هي مدة الإنجاز؟',
-      a: 'تعتمد على الكميات وتوفر المواد، ولهذا تُكتب في كل عرض سعر بدل الإعلان عن متوسط ثابت.',
+      q: 'هل توصلون خارج قسنطينة؟',
+      a: 'مقرّنا بالمنطقة الصناعية بالمَا بقسنطينة، والتسليم يتم إلى المكان. وبالنسبة لمشاريع خارج الجهة تُدرس اللوجستيك وتُسعَّر مع العرض.',
     },
     en: {
-      q: 'What is the lead time?',
-      a: 'It depends on volumes and current supply, which is why it is written into each quote rather than averaged. A few pieces and a 40-desk floor are not the same schedule.',
+      q: 'Do you deliver outside Constantine?',
+      a: 'We are based in Zone Industrielle Palma, Constantine, and deliver on site. Outside the region, logistics are assessed and priced with the quote.',
     },
   },
   {
     fr: {
-      q: 'Peut-on voir la matière avant de commander ?',
-      a: 'Oui. Nuancier de bois, échantillons de tissu et chutes de finition sont disponibles au showroom, et une planche matière est montée pour les projets sur mesure.',
+      q: 'Peut-on commander par tranches ?',
+      a: 'Oui, et c’est souvent la bonne méthode pour un bâtiment ou une école : premier lot validé, extensions reprises sur les mêmes références tant que la série est disponible.',
     },
     ar: {
-      q: 'هل يمكن رؤية المواد قبل الطلب؟',
-      a: 'نعم. نماذج الأخشاب والأقمشة متوفرة في المعرض، وتُجهَّز لوحة مواد لمشاريع التخصيص.',
+      q: 'هل يمكن الطلب على دفعات؟',
+      a: 'نعم، وهو غالبًا الأنسب لمبنى أو مدرسة: دفعة أولى معتمدة، ثم إضافات بنفس المراجع ما دامت السلسلة متوفرة.',
     },
     en: {
-      q: 'Can I see the materials first?',
-      a: 'Yes. Timber samples, fabric swatches and finish off-cuts are at the showroom, and a material board is assembled for bespoke projects.',
+      q: 'Can we order in tranches?',
+      a: 'Yes — often the right method for a building or a school: first lot approved, extensions repeated on the same references while the series remains available.',
     },
   },
   {
     fr: {
-      q: 'Livrez-vous en dehors d’Alger ?',
-      a: 'Oui, sur projet, dans les wilayas limitrophes et partout en Algérie pour les volumes importants. Le transport est chiffré avec le devis.',
+      q: 'Assurez-vous le montage ?',
+      a: 'Le montage et les réglages sont assurés par nos équipes lors de la livraison, y compris la reprise d’aplomb sur place. L’emballage est évacué.',
     },
     ar: {
-      q: 'هل توصلون خارج الجزائر العاصمة؟',
-      a: 'نعم، حسب المشروع إلى الولايات المجاورة، وإلى كل التراب الوطني للكميات الكبيرة. النقل يُسعَّر ضمن العرض.',
+      q: 'هل تتكفلون بالتركيب؟',
+      a: 'التركيب والضبط من قيام فرقنا عند التسليم، مع إعادة التسوية في المكان، ورفع مواد التغليف.',
     },
     en: {
-      q: 'Do you deliver outside Algiers?',
-      a: 'Yes, project by project across neighbouring wilayas, and nationwide for larger volumes. Transport is priced within the quote.',
-    },
-  },
-  {
-    fr: {
-      q: 'Réparez-vous du mobilier existant ?',
-      a: 'Oui : tressage refait, coussins regarnis, plateaux retravaillés. Envoyez une photo, nous disons franchement si cela vaut la peine.',
-    },
-    ar: {
-      q: 'هل تصلحون الأثاث القديم؟',
-      a: 'نعم: إعادة الضفر، تجديد الوسائد، وإعادة معالجة الأسطح. أرسل صورة وسنخبرك بصراحة إن كان الإصلاح مجديًا.',
-    },
-    en: {
-      q: 'Do you restore existing furniture?',
-      a: 'Yes: re-woven seats, re-padded cushions, reworked tops. Send a photo and we will tell you straight if it is worth saving.',
+      q: 'Do you assemble on site?',
+      a: 'Assembly and adjustment are handled by our crews at delivery, including re-levelling in place. Packing is removed.',
     },
   },
 ]

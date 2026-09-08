@@ -20,29 +20,18 @@ const OUT = join(root, 'public', 'images')
 mkdirSync(OUT, { recursive: true })
 
 const MANIFEST = [
-  // hero
-  { name: 'hero-01', ratio: 1.12, width: 1500, q: 78 },
-  { name: 'hero-02', ratio: 1.9, width: 1600, q: 72 },
-  // catalogue
-  { name: 'product-01', ratio: 0.82, width: 900 },
-  { name: 'product-02', ratio: 1.28, width: 1100 },
-  { name: 'product-03', ratio: 1.28, width: 1100 },
-  { name: 'product-04', ratio: 0.82, width: 900 },
-  { name: 'product-05', ratio: 1.28, width: 1100 },
-  { name: 'product-06', ratio: 0.82, width: 900 },
-  { name: 'product-07', ratio: 1.28, width: 1100 },
-  { name: 'product-08', ratio: 0.82, width: 900 },
-  // ambiances
-  { name: 'ambiance-01', ratio: 1.72, width: 1280, fallback: 'product-05' },
-  { name: 'ambiance-02', ratio: 0.72, width: 720, fallback: 'product-06' },
-  { name: 'ambiance-03', ratio: 1.02, width: 720, fallback: 'hero-01' },
-  { name: 'ambiance-04', ratio: 1.02, width: 950, fallback: 'product-08' },
-  { name: 'ambiance-05', ratio: 1.72, width: 1280, fallback: 'product-03' },
-  // matieres — recadrages serres dans les photos produits existantes
-  { name: 'material-01', ratio: 1.28, width: 700, src: 'product-02', crop: { x: 0.1, y: 0.35, w: 0.42, h: 0.34 } },
-  { name: 'material-02', ratio: 1.28, width: 700, src: 'product-01', crop: { x: 0.3, y: 0.5, w: 0.42, h: 0.34 } },
-  { name: 'material-03', ratio: 1.28, width: 700, src: 'product-02', crop: { x: 0.34, y: 0.45, w: 0.4, h: 0.32 } },
-  { name: 'material-04', ratio: 1.28, width: 700, src: 'product-06', crop: { x: 0.2, y: 0.6, w: 0.45, h: 0.32 } },
+  // accueil
+  { name: 'hero-01', ratio: 1.16, width: 1400, q: 80 },
+  { name: 'fabric-01', ratio: 1.9, width: 1400, q: 74 },
+  // gammes (cartes 4/3)
+  ...[1, 2, 3, 4, 5, 6, 7].map((i) => ({ name: `range-0${i}`, ratio: 1.32, width: 1080, q: 78 })),
+  // applications (tuiles de la galerie)
+  { name: 'apply-01', ratio: 1.62, width: 1400, q: 76 },
+  // matieres — recadrages serres dans les visuels produits
+  { name: 'material-01', ratio: 1.28, width: 720, src: 'range-01', crop: { x: 0.1, y: 0.28, w: 0.55, h: 0.42 } },
+  { name: 'material-02', ratio: 1.28, width: 720, src: 'range-07', crop: { x: 0.08, y: 0.2, w: 0.42, h: 0.55 } },
+  { name: 'material-03', ratio: 1.28, width: 720, src: 'range-07', crop: { x: 0.5, y: 0.12, w: 0.45, h: 0.6 } },
+  { name: 'material-04', ratio: 1.28, width: 720, src: 'range-04', crop: { x: 0.05, y: 0.5, w: 0.5, h: 0.4 } },
 ]
 
 const KB = (b) => (b / 1024).toFixed(0)

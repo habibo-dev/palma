@@ -1,101 +1,92 @@
-# Palma — site vitrine MVP
+# Palma Meuble — site vitrine (proposition client)
 
-Site de présentation pour **Palma, mobilier & aménagement sur mesure (Rouiba, Alger)**.
-Version de démonstration : architecture complète, design system, FR / AR / EN, catalogue structuré,
-formulaire de devis fonctionnel. Les textes et coordonnées sont des **données de présentation** à valider
-avec l'entreprise avant la mise en ligne.
+Site de présentation de **PALMA MEUBLE EURL**, fabricant-distributeur de **mobilier de bureau** et de **mobilier scolaire**, 17 Zone Industrielle Palma, Constantine.
+
+> ⚠️ **Statut : concept de présentation.** Ce n’est pas le site officiel de l’entreprise.
+> Bandeau « PROPOSITION » en haut de page et mention en pied de page : à retirer à la mise en ligne.
+> Les visuels sont des **illustrations provisoires** (aucune photo de produit réelle fournie) : ils sont
+> isolés dans `public/images/` et référencés par nom de fichier, donc remplaçables un par un.
+
+## Démarrer
 
 ```bash
 npm install
-npm run dev        # http://localhost:5173 (hôte 0.0.0.0)
-npm run build      # dist/ statique
-npm run verify     # contrôle contenu + rendu des 6 routes (x3 langues)
+npm run dev        # http://localhost:5173
+npm run verify     # contrôle contenu + rendu statique des 3 langues
+npm run build      # bundle de production dans dist/
+npm run preview    # sert dist/ sur http://localhost:4173
 ```
 
-## Stack
+## Ce qui est vrai, ce qui ne l’est pas
 
-Vite 8 · React 19 · Tailwind CSS 4 (tokens `@theme`) · react-router 7 · sharp (pipeline images local) ·
-polices auto-hébergées (`@fontsource-variable` : Fraunces, Manrope, Noto Kufi Arabic).
-Aucune dépendance d'animation : reveal au scroll via une `IntersectionObserver` partagée.
+| Élément | État |
+| --- | --- |
+| Raison sociale, adresse, ville, code postal | **Réel** — fourni par le client |
+| +213 555 034 016 (mobile/WhatsApp), +213 31 606 806 (standard) | **Réel** — les deux numéros cliquables partout |
+| Positionnement (bureau + scolaire, fabrication et distribution, bois et métal, B2B) | **Réel** — issu du brief |
+| E-mail, horaires d’ouverture, délai de réponse, site web, réseaux | **Non fournis → volontairement absents** (`null` dans le modèle, jamais inventés) ; un encart « e-mail non communiqué » remplace le lien |
+| Prix, dimensions, essences, certifications, références clients, statistiques | **Non inventés** — mentions « sur devis », « catalogue sur demande », « sur confirmation » |
+| Photographies | **Illustrations provisoires** à remplacer par les visuels réels |
+| Étapes de commande, secteurs, atouts, FAQ | **Factuels côté process** (comportements d’achat), formulés sans promesse chiffrée |
+
+Aucun nom de client, aucun chiffre d’activité, aucune année d’existence, aucune certification ne figure sur le site :
+ils seront ajoutés dès validation.
 
 ## Architecture
 
 ```
 src/
-  content/            ← TOUS les faits et tout le contenu éditorial
-    company.js        raison sociale, téléphone, e-mail, adresse, zones, note de démo
-    catalog.js        catégories + produits (structuré, prêt pour fiches & filtres)
-    entities.js       secteurs, atouts, matériaux, processus, ambiances, FAQ
-    i18n/{fr,ar,en}.js  chaînes d'interface (156 clés × 3 langues)
-  lib/i18n.jsx        LangProvider — t() (clés), L() (entités), Ls() (chaînes localisées), dir=rtl
-  lib/motion.js       reveal, in-view, scroll-lock, header scroll
-  components/         Header, Footer, ProductCard, QuoteForm, MapBlock, Img, Seo, UI (Section, Button…)
-  sections/           12 blocs de page (Hero, Position, Collections, Sectors, Advantages, Materials,
-                      Ambiances, Process, CatalogueBand, Showroom, ContactSection+FAQ, FinalCta)
-  pages/              Home, Products, ProductDetail, About, Contact, NotFound
-scripts/
-  optimize-images.mjs  .imgsrc/*.jpg → public/images/ recadrées au ratio exact des composants
-  check-content.mjs    cohérence i18n, images référencées, entités traduites, poids JPEG
-  smoke-render.mjs     rendu statique des 6 routes × 3 langues + assertions (h1 unique, alt, aria, JSON-LD)
+├── content/            ← TOUT le contenu éditorial, aucun texte dans les composants
+│   ├── company.js      identité, téléphones, adresse, WhatsApp, blocs horaires/zone desservie
+│   ├── catalog.js      7 gammes (bureau, sièges, réunion, accueil, rangement, scolaire, métal) + filtres
+│   ├── entities.js     secteurs, atouts, matériaux, applications, process, FAQ
+│   └── i18n/{fr,ar,en}.js   dictionnaires d’interface (le FR est la référence)
+├── lib/                i18n (LangProvider + useLang + bascule RTL) et hooks de motion
+├── components/         Header, Footer, RangeCard, QuoteForm, MapBlock, Seo, UI, Img, Icons
+├── sections/           un fichier par section de la page d’accueil
+└── pages/              Home, Ranges, RangeDetail, About, Contact, NotFound
 ```
 
-### Contenu ≠ présentation
+**Remplacer un visuel** : déposer le fichier sous le même nom dans `public/images/` (ou remplacer la source
+dans `.imgsrc/` puis `npm run images` — les ratios et le poids sont recalculés par le script).
 
-Chaque entité suit le même format multilingue, ce qui rend l'ajout de produits mécaniques :
+**Changer un texte** : `src/content/*` uniquement. Les clefs sont vérifiées par `npm run check`.
 
-```js
-{ slug: 'fauteuil-casbah', category: 'assises', image: '/images/product-01.jpg', ratio: 0.82,
-  fr: { name, desc, detail }, ar: { … }, en: { … }, materialsKey: [...], specs: null }
-```
+**Domaine et e-mail** : renseigner `company.js` → `siteUrl` (canonical/hreflang s’activent seuls) et `email`
+(tous les champs e-mail, JSON-LD et blocs de contact apparaissent automatiquement).
 
-`specs: null` = fiche technique non communiquée. **Volontaire** : dimensions, prix, certifications,
-références clients, horaires, effectifs et capacités de production ne sont jamais inventés.
-Ils s'ajoutent dans `content/`, jamais dans les composants.
+## Conventions
 
-### Ce qui est déjà branché
+- Stack : **Vite + React 19 + React Router 7 + Tailwind v4** (`@theme`, pas de `tailwind.config.js`), polices auto-hébergées, `sharp` pour les images.
+- Palette et typographie centralisées dans `src/styles/global.css` (osier/chêne/acier/vert de fabrique, Fraunces + Manrope + Noto Kufi Arabic).
+- CTA principal = **Demander un devis** ; secondaires = WhatsApp, appel, catalogue, appel de devis depuis une gamme.
+- Le formulaire d’appel d’offres **n’invente pas de back-end** : il produit la demande complète, puis l’ouvre sur WhatsApp, l’e-mail (si renseigné) ou la copie au presse-papiers.
+- SEO : `Seo.jsx` (un objet par page + JSON-LD `FurnitureStore`/`Product`), `index.html` (méta ouvertes, favicon SVG, récap HTML complet en `<noscript>`).
+- Animations : `Reveal` + `mask-up` sur masque SVG, `drift` en boucle très lente, `useScrollLock` sur le menu mobile.
+- **RTL arabe** : `dir` bascule sur `<html>`, marges logiques uniquement (`ms-`, `ps-`, `start/end`, `text-start`), aucune classe `left-/right-`.
+- `prefers-reduced-motion` neutralise le fondu, le masque, le drift, le ping et le scroll fluide.
 
-- **CTA** : devis (ancre `#devis`), WhatsApp avec message pré-rempli selon la langue, `tel:` et `mailto:`.
-- **Formulaire** : `QuoteForm` construit un message propre puis le transmet (WhatsApp / e-mail / presse-papiers).
-  Pas de back-end sur cette version — donc zéro contact perdu et zéro serveur à maintenir.
-- **Fiche produit → devis** : `/contact?piece=<slug>` pré-positionne la pièce dans la demande.
-- **Catalogue** : zone dédiée « envoyé sur demande ». Aucun PDF fictif n'est généré.
-- **SEO** : `<html lang>`, title/description par page et par langue, Open Graph, hreflang, canonical,
-  JSON-LD `FurnitureStore` (adresse, zones desservies, langues parlées), balises `alt` systématiques.
-- **Carte** : OpenStreetMap monté au clic (aucune requête tierce au premier affichage), lien itinéraire Google Maps.
+## Vérifications automatiques
 
-### Langues
+`npm run verify` enchaîne deux scripts — ils constituent la preuve de non-régression :
 
-FR par défaut, AR (RTL complet, `dir` posé sur `<html>`, propriétés logiques partout), EN.
-La langue est mémorisée (`localStorage`) et déduite de la navigateur. Pour une indexation séparée par
-langue en production, passer le code langue dans l'URL (`/ar/...`) — la structure `t()`/`L()` ne change pas.
+1. `scripts/check-content.mjs`
+   parité stricte des clefs FR/AR/EN (166 × 3), présence de tous les fichiers image référencés,
+   couverture trilingue des 41 entités, **chasse aux résidus** de la maquette fictive écartée,
+   budget de poids JPEG, et contrôle que `company.js` porte bien les coordonnées fournies
+   (et laisse `null` ce qui n’est pas confirmé).
+2. `scripts/smoke-render.mjs`
+   rendu statique React des 8 routes × 3 langues : 404 pour un slug de gamme inconnu,
+   longueur minimale de texte par langue, `dir="rtl"` et `aria-expanded`/`aria-pressed`/labels sur les
+   contrôles, présence des **10 ancres** utilisées par la navigation, téléphone réel et mention
+   « Sur devis » sur chaque page, **aucun prix publié**, aucun texte placeholder.
 
-## Avant mise en ligne — 4 champs à remplacer
+Dernier passage : 24 combos de rendu OK, 14 visuels pour 917 Ko, 0 prix publié, 0 texte placeholder.
 
-Dans `src/content/company.js` : `phone`, `email`, `address.street`, `hours` (laissé `null` : les horaires
-ne s'affichent que si confirmés). Remplacer les visuels de substitution par les vraies photos
-(voir ci-dessous), puis passer `demo.enabled` à `false` pour retirer le bandeau « maquette de présentation ».
+## Contrôle manuel restant
 
-## Images
-
-10 visuels photographiés pour l'atelier (hero, 8 pièces du catalogue). Les 5 images d'ambiance et les
-4 plans matière sont pour l'instant des **recadrages de ces photos** (le script les produit automatiquement,
-le site ne casse jamais). Pour les remplacer : déposer `.imgsrc/ambiance-01.jpg` … `material-04.jpg`
-puis `npm run images` — le manifeste préfère toujours le fichier source au recadrage de secours.
-
-```bash
-node scripts/optimize-images.mjs   # recadrage cover au ratio exact, aucune surexposition, ~1,1 Mo au total
-```
-
-## Étape suivante (après validation de la maquette)
-
-1. Données réelles : gamme complète, prix « sur devis » ou fourchettes validées, fiches techniques.
-2. PDF catalogue réel dans `public/` → remplacer l'appel « sur demande » par un lien de téléchargement direct.
-3. Pages : `/secteurs/<id>`, `/methodologie`, `/mentions-legales`, `/realisations` (photos clients autorisées).
-4. Routage par langue + sitemap + `robots.txt`, images en `avif/webp` si CDN.
-5. Formulaire : endpoint (Resend / n8n / Google Forms) — le composant est déjà découpé pour ça.
-6. Analytics respectueux du consentement (Matomo / Plausible) et données structuratives `Product` par fiche.
-
----
-
-*FR/AR/EN demo build. Conçu pour être présenté directement au dirigeant : la page d'accueil est complète,
-les données sont structurées pour la version définitive.*
+Aucun navigateur headless n’était disponible dans cet environnement : les audits ci-dessus sont
+statiques (DOM rendu + assertions). Les points suivants sont à vérifier visuellement avant
+présentation client : franges de survol sur la galerie d’applications, hauteur du bandeau de
+filtres sticky sur `/gammes` en arabe (longueur des libellés), et rendu des photos sur un écran
+de salon client.
