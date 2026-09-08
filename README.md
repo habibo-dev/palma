@@ -71,7 +71,7 @@ dans `.imgsrc/` puis `npm run images` — les ratios et le poids sont recalculé
 `npm run verify` enchaîne deux scripts — ils constituent la preuve de non-régression :
 
 1. `scripts/check-content.mjs`
-   parité stricte des clefs FR/AR/EN (166 × 3), présence de tous les fichiers image référencés,
+   parité stricte des clefs FR/AR/EN (167 × 3), présence de tous les fichiers image référencés,
    couverture trilingue des 41 entités, **chasse aux résidus** de la maquette fictive écartée,
    budget de poids JPEG, et contrôle que `company.js` porte bien les coordonnées fournies
    (et laisse `null` ce qui n’est pas confirmé).
@@ -81,7 +81,7 @@ dans `.imgsrc/` puis `npm run images` — les ratios et le poids sont recalculé
    contrôles, présence des **10 ancres** utilisées par la navigation, téléphone réel et mention
    « Sur devis » sur chaque page, **aucun prix publié**, aucun texte placeholder.
 
-Dernier passage : 24 combos de rendu OK, 14 visuels pour 917 Ko, 0 prix publié, 0 texte placeholder.
+Dernier passage : 167 × 3 clés OK, 24 rendus (8 routes × 3 langues) sans problème, 14 visuels pour 917 Ko, aucun prix publié, aucun texte placeholder.
 
 ## Contrôle manuel restant
 
