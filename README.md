@@ -140,6 +140,19 @@ Dernier passage : 167 × 3 clés OK, 24 rendus (8 routes × 3 langues) sans prob
 complet sans alerte React, 14 visuels pour 917 Ko, aucun prix publié, aucun texte placeholder,
 aucun résidu de la maquette fictive.
 
+## Checklist de présentation (5 minutes, dans l’ordre)
+
+1. **Accueil**, première vue : ligne d’index (7 familles · 4 acheteurs · tarifs sur devis), titre,
+   deux CTA + appel direct, insert « mobilier scolaire », puce « Visuel provisoire ».
+2. **Basculer en arabe** (sélecteur FR/ع/EN) : la page entière passe en RTL, l’adresse aussi.
+3. **Nos gammes** → filtre « Mobilier scolaire » → ouvrir une gamme : typologies listées,
+   dimensions et prix annoncés « sur devis », jamais de fiche produit bidon.
+4. **Demander un devis** depuis cette gamme : le formulaire arrive pré-contexté ; soumettre vide
+   est refusé, soumettre complet affiche la demande prête à envoyer (WhatsApp / e-mail si
+   renseigné / copie), sans fausse promesse de délai.
+5. **Nous trouver** : les deux numéros composent, l’itinéraire ouvre Google Maps sur
+   l’adresse réelle, la carte ne se charge qu’au clic ; le bandeau de statut reste visible.
+
 ## Contrôle manuel restant
 
 Aucun navigateur headless n’était disponible dans cet environnement : les audits ci-dessus sont

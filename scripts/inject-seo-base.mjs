@@ -17,7 +17,14 @@ const base = (process.env.VITE_SITE_URL || '').trim().replace(/\/+$/, '')
 const file = join(root, 'dist/index.html')
 
 if (!base) {
-  console.log('seo-base : VITE_SITE_URL non défini → canonical et OG laissés relatifs (aucun domaine inventé).')
+  // aucune injection, mais on valide quand même le HTML livré (build client)
+  const html = readFileSync(file, 'utf8')
+  const problems = await validate(html, '')
+  if (problems.length) {
+    console.error('seo-base : HTML du build invalide →\n  - ' + problems.join('\n  - '))
+    process.exit(1)
+  }
+  console.log('seo-base : VITE_SITE_URL non défini → canonical et OG laissés relatifs (aucun domaine inventé). HTML validé.')
   process.exit(0)
 }
 if (!existsSync(file)) {
@@ -29,30 +36,56 @@ if (!/^https?:\/\//.test(base)) {
   process.exit(1)
 }
 
+/** Relit le HTML livré : une balise mal formée doit faire échouer le build. */
+async function validate(src, prefix) {
+  const { JSDOM } = await import('jsdom')
+  const doc = new JSDOM(src).window.document
+  const meta = (sel) => doc.querySelector(sel)
+  const errs = []
+  if (!/<title>[^<]+<\/title>/.test(src)) errs.push('<title> absente ou vide')
+  if (!meta('meta[name="description"]')?.getAttribute('content')) errs.push('meta description absente')
+  if (!meta('meta[property="og:type"]')?.getAttribute('content')) errs.push('og:type absent ou abîmé')
+  if (!meta('meta[property="og:title"]')?.getAttribute('content')) errs.push('og:title absent ou abîmé')
+  if (!meta('meta[property="og:image"]')?.getAttribute('content')) errs.push('og:image absent')
+  if (!meta('link[rel="icon"]')?.getAttribute('href')) errs.push('favicon non déclaré')
+  const counted = (src.match(/<meta\s[^>]*content="/g) || []).length
+  const parsed = doc.querySelectorAll('head meta[content]').length
+  if (counted !== parsed) errs.push(`${counted - parsed} balise(s) méta en trop ou imbriquées`)
+  if (prefix) {
+    if (!meta('link[rel="canonical"]')?.getAttribute('href')?.startsWith(prefix)) errs.push('canonical absent ou non absolu')
+    if (!meta('meta[property="og:url"]')?.getAttribute('content')?.startsWith(prefix)) errs.push('og:url absent ou non absolu')
+    if (!meta('meta[property="og:image"]')?.getAttribute('content')?.startsWith(prefix + '/')) errs.push('og:image non absolu')
+  } else if (/<link rel="canonical"|https?:\/\/[^"]*(?:exemple|preview|vercel|netlify)/i.test(src)) {
+    errs.push('URL absolue publiée alors qu’aucun domaine n’est confirmé')
+  }
+  return errs
+}
+
 let html = readFileSync(file, 'utf8')
 const before = html
 const done = []
 
-/** Insère une balise <meta> complète juste avant la balise repérée par `anchor`. */
-function insertMetaBefore(anchor, tag) {
-  const re = new RegExp(`([ \\t]*)(${anchor})`)
-  if (!re.test(html)) return false
-  html = html.replace(re, (_m, indent, a) => `${indent}<meta ${tag} />\n${indent}${a}`)
-  return true
-}
-const hasTag = (attr, value) => new RegExp(`<meta[^>]+${attr}="${value}"`).test(html)
-
 // og:image / og:image:alt / twitter:image → absolus
-html = html.replace(/(<meta[^>]*content=")\/((?:images|og)\/[^"]+)/g, '$1' + base + '/$2')
-if (/content="\/images\//.test(html)) {
-  html = html.replace(/content="\/images\//g, `content="${base}/images/`)
-  done.push('og:image')
-} else if (html.includes(base + '/images/')) done.push('og:image')
+const absolutize = (attr, value) => {
+  const re = new RegExp(`(<meta[^>]+${attr}="${value}" content=")\/(images\/[^"]+)(")`, 'g')
+  const before = html
+  html = html.replace(re, `$1${base}/$2$3`)
+  if (before !== html) done.push(attr + ':' + value)
+}
+absolutize('property', 'og:image')
+absolutize('name', 'twitter:image')
 
-// og:url + canonical
-if (!hasTag('property', 'og:url')) {
-  if (insertMetaBefore('property="og:type"', `property="og:url" content="${base}/"`)) done.push('og:url')
-} else done.push('og:url')
+// og:url (insertion d’une balise complète, jamais d’un fragment)
+if (!/<meta property="og:url"/.test(html)) {
+  const re = /([ \t]*)<meta property="og:type"/
+  if (re.test(html)) {
+    html = html.replace(re, `$1<meta property="og:url" content="${base}/" />\n$1<meta property="og:type"`)
+    done.push('og:url')
+  } else {
+    console.error('seo-base : balise og:type introuvable — insertion de og:url annulée.')
+    process.exit(1)
+  }
+}
 
 if (!/<link rel="canonical"/.test(html)) {
   html = html.replace(/([ \t]*)(<\/head>)/, `$1<link rel="canonical" href="${base}/" />\n$1$2`)
@@ -64,14 +97,9 @@ html = html.replace(/("@context": "https:\/\/schema\.org",\s*\n(\s*)"@type": "Fu
 html = html.replace(/"image": "(\/images\/[^"]+)"/g, `"image": "${base}$1"`)
 done.push('json-ld')
 
-/* garde-fous : jamais de balise cassée ni de doublon */
-const broken = html.match(/<meta[^>]*content="[^"]*"\s+content="[^>]*>/g) || []
-if (broken.length) {
-  console.error(`seo-base : balises méta mal formées générées →\n  ${broken.join('\n  ')}`)
-  process.exit(1)
-}
-if ((html.match(/<link rel="canonical"/g) || []).length > 1) {
-  console.error('seo-base : canonical dupliqué')
+const errors = await validate(html, base)
+if (errors.length) {
+  console.error('seo-base : HTML final invalide →\n  - ' + errors.join('\n  - '))
   process.exit(1)
 }
 
