@@ -1,15 +1,16 @@
 {
-  "name": "palma-site",
+  "name": "palma-meuble-site",
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "PALMA — Mobilier & aménagement sur mesure, Alger. Site vitrine MVP.",
+  "description": "PALMA MEUBLE EURL — mobilier de bureau et mobilier scolaire, Constantine. Site vitrine (concept de présentation).",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "vite build",
+    "build": "vite build && node scripts/inject-seo-base.mjs",
     "preview": "vite preview --host 0.0.0.0",
     "check": "node scripts/check-content.mjs",
-    "verify": "npm run check && node scripts/smoke-render.mjs",
+    "verify": "npm run check && node scripts/smoke-render.mjs && node scripts/interact.mjs",
+    "test": "node scripts/interact.mjs",
     "images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
@@ -23,8 +24,16 @@
     "@fontsource-variable/noto-kufi-arabic": "^5.3.0",
     "@tailwindcss/vite": "^4.3.3",
     "@vitejs/plugin-react": "^6.1.1",
+    "jsdom": "^30.0.1",
     "sharp": "^0.34.5",
     "tailwindcss": "^4.3.3",
     "vite": "^8.2.2"
-  }
+  },
+  "keywords": [
+    "mobilier de bureau",
+    "mobilier scolaire",
+    "Constantine",
+    "Palma Meuble",
+    "fabricant distributeur"
+  ]
 }

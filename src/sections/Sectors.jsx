@@ -23,7 +23,7 @@ export function Sectors() {
         {/* panneau visuel (desktop) */}
         <div className="hidden lg:col-span-5 lg:block">
           <div className="sticky top-32">
-            <div className="relative overflow-hidden rounded-soft bg-rattan-soft" style={{ aspectRatio: '0.8' }}>
+            <div className="relative overflow-hidden rounded-soft bg-sand-soft" style={{ aspectRatio: '0.8' }}>
               {sectors.map((s) => (
                 <img
                   key={s.id}

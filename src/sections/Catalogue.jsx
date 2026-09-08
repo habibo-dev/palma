@@ -16,7 +16,7 @@ export function CatalogueBand() {
       <div className="relative grid items-center gap-10 lg:grid-cols-12">
         <div className="lg:col-span-7">
           <Reveal>
-            <p className="eyebrow !text-rattan">
+            <p className="eyebrow !text-sand">
               <Icon name="archive" size={14} />
               {t('catalogue.eyebrow')}
             </p>
@@ -42,7 +42,7 @@ export function CatalogueBand() {
             <ul className="divide-y divide-bone/10">
               {t('catalogue.rows').map((row, i) => (
                 <li key={row} className="flex items-center gap-3 py-3.5 text-[0.9375rem] text-bone/85 first:pt-0 last:pb-0">
-                  <span className="text-[0.6875rem] font-bold tracking-[0.18em] text-rattan tabular">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="text-[0.6875rem] font-bold tracking-[0.18em] text-sand tabular">{String(i + 1).padStart(2, '0')}</span>
                   {row}
                 </li>
               ))}

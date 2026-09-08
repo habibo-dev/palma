@@ -115,7 +115,7 @@ export function osmEmbed() {
 }
 
 /** URL absolue (canonical, Open Graph) — inactive tant que le domaine n'est pas confirmé. */
-export const siteUrl = null // ex. 'https://…' [À CONFIRMER : domaine officiel]
+export const siteUrl = import.meta.env?.VITE_SITE_URL || null // ex. 'https://…' [À CONFIRMER : domaine officiel]
 
 /** Messages WhatsApp contextuels, par langue. */
 export const whatsappMessages = {

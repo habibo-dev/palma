@@ -62,6 +62,11 @@ export const fr = {
       { k: 'Base', v: 'ZI Palma, Constantine' },
     ],
     caption: 'Extraits de gammes. Les visuels définitifs seront remplacés par vos photos de catalogue.',
+    countFamilies: 'familles de mobilier',
+    countBuyers: 'acheteurs servis',
+    countPrice: 'tarifs sur devis',
+    insetAlt: 'Salle de classe équipée de tables-bancs en bois et métal fournis par Palma Meuble.',
+    scroll: 'Défiler',
   },
 
   capabilities: {
@@ -90,6 +95,10 @@ export const fr = {
     ],
   },
 
+  visual: {
+    tag: 'Visuel provisoire',
+    caption: 'Visuel d’illustration : remplacé par la photo réelle de la gamme dès réception.',
+  },
   ranges: {
     eyebrow: 'Nos gammes',
     title: 'Sept familles de mobilier professionnel',

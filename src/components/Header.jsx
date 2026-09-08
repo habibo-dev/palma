@@ -94,7 +94,7 @@ export function Header() {
       {company.demo.enabled && (
         <div className="concept-ribbon">
           <div className="wrap flex h-8 items-center gap-3">
-            <span aria-hidden className="hidden h-1.5 w-1.5 shrink-0 rounded-full bg-rattan sm:block" />
+            <span aria-hidden className="hidden h-1.5 w-1.5 shrink-0 rounded-full bg-sand sm:block" />
             <p className="truncate">
               <strong className="me-2 uppercase tracking-[0.14em]">Concept</strong>
               {company.demo.ribbon[lang]}
@@ -107,14 +107,14 @@ export function Header() {
       <div className={`overflow-hidden bg-palm text-bone transition-[max-height,opacity] duration-500 ${scrolled ? 'max-h-0 opacity-0' : 'max-h-12 opacity-100'}`}>
         <div className="wrap flex h-10 items-center justify-between gap-4 text-[0.75rem]">
           <p className="flex min-w-0 items-center gap-2">
-            <Icon name="pin" size={14} className="shrink-0 text-rattan" />
+            <Icon name="pin" size={14} className="shrink-0 text-sand" />
             <span className="truncate">{t('top.location')}</span>
             <span aria-hidden className="hidden opacity-40 lg:inline">·</span>
             <span className="hidden truncate opacity-70 lg:inline">{t('top.note')}</span>
           </p>
           <div className="flex shrink-0 items-center gap-4">
             <a href={telLink(1)} className="hidden items-center gap-2 hover:underline sm:flex">
-              <Icon name="phone" size={14} className="text-rattan" />
+              <Icon name="phone" size={14} className="text-sand" />
               <span dir="ltr" className="tabular">
                 {company.phones[1].display}
               </span>

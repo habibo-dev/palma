@@ -17,7 +17,7 @@ export function FinalCta() {
         <div className="grid items-end gap-10 lg:grid-cols-12">
           <div className="lg:col-span-8">
             <Reveal>
-              <p className="eyebrow !text-rattan">
+              <p className="eyebrow !text-sand">
                 <Icon name="factory" size={15} />
                 {company.legalName} — {company.address.city}
               </p>

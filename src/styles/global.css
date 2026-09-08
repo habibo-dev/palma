@@ -26,10 +26,10 @@
   --color-steel: #33454f;
   --color-steel-soft: #e8eaec;
   --color-oak: #b67f3f;
-  /* aliases conservees pour les composants existants */
+  /* accent bois (etats d’erreur, mentions) + sable clair */
   --color-clay: #b67f3f;
-  --color-rattan: #c7bba4;
-  --color-rattan-soft: #e6e3da;
+  --color-sand: #c7bba4;
+  --color-sand-soft: #e6e3da;
   --color-line: #dcdad3;
 
   --radius-hair: 2px;
@@ -259,7 +259,7 @@
     font-variant-numeric: tabular-nums;
     font-size: clamp(2.5rem, 5vw, 3.75rem);
     line-height: 1;
-    color: var(--color-rattan);
+    color: var(--color-sand);
   }
 
   /* --- Boutons --------------------------------------------------------- */
@@ -375,7 +375,7 @@
   }
   .frame {
     overflow: hidden;
-    background: var(--color-rattan-soft);
+    background: var(--color-sand-soft);
     border-radius: var(--radius-soft);
   }
   /* une carte ne doit pas empiler deux rayons differents */
@@ -477,6 +477,21 @@
   .mask-up.is-in {
     clip-path: inset(0 0 0% 0);
   }
+  @keyframes palma-scroll {
+    0% {
+      transform: translateY(-100%);
+    }
+    55%,
+    100% {
+      transform: translateY(100%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [class*='animate-[palma-scroll'] {
+      animation: none !important;
+    }
+  }
+
   @keyframes palma-drift {
     0%,
     100% {
@@ -524,7 +539,7 @@
     letter-spacing: 0.02em;
   }
   .concept-ribbon strong {
-    color: var(--color-rattan);
+    color: var(--color-sand);
     font-weight: 700;
   }
 

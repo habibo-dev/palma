@@ -53,7 +53,7 @@ export function Footer() {
 
           {/* navigation */}
           <div className="lg:col-span-2">
-            <h2 className="text-[0.625rem] font-bold uppercase tracking-[0.18em] text-rattan">{t('footer.nav')}</h2>
+            <h2 className="text-[0.625rem] font-bold uppercase tracking-[0.18em] text-sand">{t('footer.nav')}</h2>
             <ul className="mt-4 space-y-2.5">
               {nav.map((x) => (
                 <li key={x.to}>
@@ -67,7 +67,7 @@ export function Footer() {
 
           {/* gammes */}
           <div className="lg:col-span-3">
-            <h2 className="text-[0.625rem] font-bold uppercase tracking-[0.18em] text-rattan">{t('footer.services')}</h2>
+            <h2 className="text-[0.625rem] font-bold uppercase tracking-[0.18em] text-sand">{t('footer.services')}</h2>
             <ul className="mt-4 space-y-2.5">
               {products.slice(0, 5).map((p) => (
                 <li key={p.slug}>
@@ -90,10 +90,10 @@ export function Footer() {
 
           {/* contact */}
           <div className="lg:col-span-3">
-            <h2 className="text-[0.625rem] font-bold uppercase tracking-[0.18em] text-rattan">{t('footer.contact')}</h2>
+            <h2 className="text-[0.625rem] font-bold uppercase tracking-[0.18em] text-sand">{t('footer.contact')}</h2>
             <address className="mt-4 space-y-3.5 text-[0.9375rem] not-italic">
               <p className="flex gap-2.5 text-bone/80">
-                <Icon name="pin" size={16} className="mt-1 shrink-0 text-rattan" />
+                <Icon name="pin" size={16} className="mt-1 shrink-0 text-sand" />
                 <span>
                   {company.address.label[lang]}
                   <a href={mapsLink()} target="_blank" rel="noopener" className="mt-1 block w-fit text-[0.8125rem] text-bone underline decoration-bone/30 hover:decoration-bone">
@@ -104,7 +104,7 @@ export function Footer() {
               {company.phones.map((p, i) => (
                 <p key={p.tel}>
                   <a href={telLink(i)} dir="ltr" className="flex items-center gap-2.5 tabular text-bone/85 hover:text-bone">
-                    <Icon name="phone" size={16} className="shrink-0 text-rattan" />
+                    <Icon name="phone" size={16} className="shrink-0 text-sand" />
                     {p.display}
                     <span className="text-[0.6875rem] uppercase tracking-[0.14em] text-bone/45">{i === 0 ? 'WhatsApp' : t('cta.callLandline')}</span>
                   </a>
@@ -113,23 +113,23 @@ export function Footer() {
               {emailHref ? (
                 <p>
                   <a href={emailHref} dir="ltr" className="flex items-center gap-2.5 break-all text-bone/85 hover:text-bone">
-                    <Icon name="mail" size={16} className="shrink-0 text-rattan" />
+                    <Icon name="mail" size={16} className="shrink-0 text-sand" />
                     {company.email}
                   </a>
                 </p>
               ) : (
                 <p className="flex items-start gap-2.5 text-[0.8125rem] leading-snug text-bone/50">
-                  <Icon name="mail" size={16} className="mt-0.5 shrink-0 text-rattan" />
+                  <Icon name="mail" size={16} className="mt-0.5 shrink-0 text-sand" />
                   {t('address.emailPending')}
                 </p>
               )}
               <p className="flex gap-2.5 text-bone/70">
-                <Icon name="clock" size={16} className="mt-1 shrink-0 text-rattan" />
+                <Icon name="clock" size={16} className="mt-1 shrink-0 text-sand" />
                 <span>{Ls(company.hoursNote)}</span>
               </p>
             </address>
 
-            <h3 className="mt-7 text-[0.625rem] font-bold uppercase tracking-[0.18em] text-rattan">{t('footer.areas')}</h3>
+            <h3 className="mt-7 text-[0.625rem] font-bold uppercase tracking-[0.18em] text-sand">{t('footer.areas')}</h3>
             <p className="mt-3 flex flex-wrap gap-x-2 gap-y-1 text-[0.8125rem] text-bone/70">
               {company.areaServed[lang].map((a) => (
                 <span key={a}>
@@ -159,7 +159,7 @@ export function Footer() {
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             {company.demo.enabled && (
               <span className="inline-flex items-center gap-2 rounded-full border border-bone/20 px-3 py-1 text-[0.6875rem] text-bone/70">
-                <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-rattan" />
+                <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-sand" />
                 {Ls({ fr: 'Concept de présentation — non officiel', en: 'Presentation concept — unofficial', ar: 'تصوّر مقترح — غير رسمي' })}
               </span>
             )}

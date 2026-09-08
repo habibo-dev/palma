@@ -38,7 +38,7 @@ export default function RangeDetail() {
       <Seo path={`/gammes/${product.slug}`} title={`${copy.name} — Palma Meuble, ${company.city}`} description={copy.desc} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <Section tone="shell" className="!pt-[12.5rem] lg:!pt-[15rem]" tight>
+      <Section tone="shell" className="!pt-[10.5rem] lg:!pt-[15rem]" tight>
         <nav aria-label="Fil d’Ariane" className="flex flex-wrap items-center gap-2 text-[0.8125rem] text-stone">
           <Link to="/" className="hover:text-ink">
             {t('nav.home')}
@@ -58,9 +58,20 @@ export default function RangeDetail() {
         </nav>
 
         <div className="mt-8 grid gap-10 lg:grid-cols-12 lg:gap-x-14">
-          <Reveal variant="mask" className="lg:col-span-7">
-            <Img src={product.image} alt={`${copy.name} — ${company.name}, ${company.city}`} ratio={1.24} priority sizes="(max-width:1024px) 100vw, 56vw" />
-          </Reveal>
+          <div className="lg:col-span-7">
+            <Reveal variant="mask" className="relative">
+              <Img src={product.image} alt={`${copy.name} — ${company.name}, ${company.city}`} ratio={1.24} priority sizes="(max-width:1024px) 100vw, 56vw" />
+              <span className="absolute end-3 top-3 z-10 rounded-[2px] border border-bone/25 bg-ink/70 px-2.5 py-1 text-[0.625rem] font-bold uppercase tracking-[0.14em] text-bone backdrop-blur-[2px]">
+                {t('visual.tag')}
+              </span>
+            </Reveal>
+            <Reveal delay={90}>
+              <p className="body-sm mt-3 flex items-start gap-2 text-stone">
+                <Icon name="layers" size={14} className="mt-0.5 shrink-0 text-moss" />
+                {t('visual.caption')}
+              </p>
+            </Reveal>
+          </div>
 
           <div className="lg:col-span-5">
             <Reveal>

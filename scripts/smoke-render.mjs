@@ -13,7 +13,8 @@
 import { createServer } from 'vite'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { createElement as h } from 'react'
-import { readFileSync } from 'node:fs'
+import { readFileSync, readdirSync as nodeReaddir } from 'node:fs'
+import * as nodeFs from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 void fileURLToPath
@@ -227,6 +228,97 @@ for (const bad of ['/gammes/slug-inexistant', '/n-existe-pas', '/collections']) 
 }
 // routes de l’ancienne arborescence : rendues en 404, jamais en erreur blanche
 if (!rendered['/collections'].includes('Retour')) fail('/collections : page de repli incomplete')
+
+// --- liens, CTAs, téléphones, WhatsApp, carte --------------------------------
+const knownRoutes = new Set(ROUTES.map((r) => r.split('#')[0].split('?')[0]).concat(['/gammes', '/contact', '/']))
+const validSlugs = new Set(catalog.products.map((p) => `/gammes/${p.slug}`))
+const idsByRoute = {}
+for (const [route, html] of Object.entries(rendered)) idsByRoute[route] = new Set([...html.matchAll(/id="([^"]+)"/g)].map((m) => m[1]))
+const anchorsByRoute = {
+  '/': idsByRoute['/'] || new Set(),
+  '/gammes': idsByRoute['/gammes'] || new Set(),
+  '/a-propos': idsByRoute['/a-propos'] || new Set(),
+  '/contact': idsByRoute['/contact'] || new Set(),
+  [`/gammes/${range0.slug}`]: idsByRoute[`/gammes/${range0.slug}`] || new Set(),
+}
+const expectedTels = new Set(company.phones.map((p) => `tel:${p.tel}`))
+const expectedWa = `https://wa.me/${company.phones[0].whatsapp}`
+const imgFiles = new Set(nodeFs.readdirSync(join(root, 'public/images')).filter((f) => f.endsWith('.jpg')))
+let linkCount = 0
+
+for (const [route, html] of Object.entries(rendered)) {
+  if (route === '/n-existe-pas' || route === '/gammes/slug-inexistant') continue
+  const hrefs = [...html.matchAll(/href="([^"]+)"/g)].map((m) => m[1])
+  linkCount += hrefs.length
+  for (const href of hrefs) {
+    if (href === '#' || /href="undefined|null/.test(href)) fail(`${route} : lien vide ou cassé (${href})`)
+    if (href.startsWith('/images/')) {
+      if (!imgFiles.has(href.split('/').pop())) fail(`${route} : ressource image absente du build (${href})`)
+      continue
+    }
+    if (href.startsWith('#')) {
+      if (!anchorsByRoute[route]?.has(href.slice(1))) fail(`${route} : ancre locale #${href.slice(1)} introuvable sur la page`)
+      continue
+    }
+    if (href.startsWith('tel:')) {
+      if (!expectedTels.has(href)) fail(`${route} : lien téléphone inattendu (${href})`)
+      continue
+    }
+    if (href.startsWith('mailto:')) {
+      fail(`${route} : mailto publié alors que l’e-mail n’est pas confirmé`)
+      continue
+    }
+    if (href.includes('wa.me')) {
+      if (!href.startsWith(expectedWa)) fail(`${route} : lien WhatsApp vers un autre numéro (${href})`)
+      const text = new URL(href).searchParams.get('text')
+      if (!text || text.length < 12) fail(`${route} : message WhatsApp manquant ou trop court`)
+      continue
+    }
+    if (href.startsWith('http://') || href.startsWith('https://')) {
+      if (!/maps\.(google\.)?com|google\.[a-z]+\/maps/.test(href)) fail(`${route} : lien externe non attendu (${href})`)
+      const u = new URL(href)
+      if (!/Palma|Constantine/i.test(decodeURIComponent(u.search || ''))) fail(`${route} : requête d’itinéraire sans l’adresse réelle (${href})`)
+      continue
+    }
+    // lien interne
+    const [pathAndQuery, hash] = href.split('#')
+    const path = pathAndQuery.split('?')[0]
+    if (path === '/collections' || path.startsWith('/collections/')) fail(`${route} : lien vers l’ancienne arborescence (${href})`)
+    if (!knownRoutes.has(path) && !validSlugs.has(path)) fail(`${route} : lien interne vers une route inconnue (${href})`)
+    if (hash && anchorsByRoute[path] && !anchorsByRoute[path].has(hash)) fail(`${route} : lien ${href} — ancre #${hash} absente de la page cible`)
+    if (pathAndQuery.includes('gamme=')) {
+      const slug = new URL(`http://x${pathAndQuery}`).searchParams.get('gamme')
+      if (!validSlugs.has(`/gammes/${slug}`)) fail(`${route} : contexte de gamme invalide dans ${href}`)
+    }
+  }
+  // visuels référencés par le rendu = fichiers réellement livrés
+  for (const m of html.matchAll(/src="(\/images\/[^"]+)"/g)) {
+    if (!imgFiles.has(m[1].split('/').pop())) fail(`${route} : visuel absent du build (${m[1]})`)
+  }
+}
+if (count(rendered['/'], /href="tel:/g) < 2) fail('accueil : moins de 2 liens téléphone')
+if (!/no.?validate/i.test(rendered['/contact'])) fail('/contact : formulaire sans novalidate (validation native inconsistante)')
+if (/<form[^>]+action=/.test(rendered['/contact'])) fail('/contact : le formulaire a une action POST (aucun back-end prévu)')
+
+// liens de la navigation : chaque entrée du menu doit mener quelque part de valide
+const navHrefs = [...shell('/').matchAll(/href="(\/[^"]*)"/g)].map((m) => m[1])
+for (const href of ['/gammes', '/a-propos', '/contact', '/#applications', '/#pour-qui', '/#gammes']) {
+  const [path, hash] = href.split('#')
+  const target = path || '/'
+  if (!navHrefs.some((h) => h === href || h === `${target}#${hash}`.replace('#undefined', ''))) {
+    if (!navHrefs.includes(target)) fail(`Header : ${target} absent de la navigation`)
+  }
+}
+
+// carte : embed OSM + itinéraire construits à partir de l’adresse réelle
+const osm = companyMod.osmEmbed()
+const maps = companyMod.mapsLink()
+if (!/openstreetmap\.org\/export\/embed\.html/.test(osm)) fail('MapBlock : iframe OSM invalide')
+if (!osm.includes(`marker=${company.address.osm.lat}`) || !osm.includes(String(company.address.osm.lon))) fail(`MapBlock : le marqueur ne correspond pas à l’adresse (${osm})`)
+if (!/bbox=/.test(osm)) fail('MapBlock : iframe sans emprise (bbox) — carte hors zone')
+const mapsDecoded = decodeURIComponent(maps)
+if (!/google\.com\/maps/.test(maps)) fail('MapBlock : lien d’itinéraire Google Maps absent')
+if (!/Zone Industrielle Palma/.test(mapsDecoded) || !/Constantine/.test(mapsDecoded)) fail(`MapBlock : l’itinéraire ne pointe pas sur l’adresse réelle (${mapsDecoded})`)
 
 // --- index.html ---------------------------------------------------------------
 const indexHtml = readFileSync(join(root, 'index.html'), 'utf8')

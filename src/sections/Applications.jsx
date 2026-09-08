@@ -19,7 +19,7 @@ export function Applications() {
       <div className="flex flex-wrap items-end justify-between gap-6">
         <div className="max-w-3xl">
           <Reveal>
-            <p className="eyebrow !text-rattan">
+            <p className="eyebrow !text-sand">
               <Icon name="layers" size={14} />
               {t('applications.eyebrow')}
             </p>
@@ -32,8 +32,8 @@ export function Applications() {
           </Reveal>
         </div>
         <Reveal delay={200}>
-          <p className="flex max-w-64 items-start gap-2 border-s border-rattan/40 ps-4 text-[0.75rem] leading-snug text-bone/55">
-            <Icon name="measure" size={14} className="mt-0.5 shrink-0 text-rattan" />
+          <p className="flex max-w-64 items-start gap-2 border-s border-sand/40 ps-4 text-[0.75rem] leading-snug text-bone/55">
+            <Icon name="measure" size={14} className="mt-0.5 shrink-0 text-sand" />
             {t('applications.note')}
           </p>
         </Reveal>
@@ -58,7 +58,7 @@ export function Applications() {
                     <p className="font-display text-[1.15rem] leading-tight text-bone sm:text-[1.3rem]">{copy.title}</p>
                     <p className="mt-1.5 text-[0.8125rem] leading-snug text-bone/70">{copy.text}</p>
                   </div>
-                  <span className="hidden shrink-0 text-[0.625rem] font-bold uppercase tracking-[0.2em] text-rattan sm:block">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="hidden shrink-0 text-[0.625rem] font-bold uppercase tracking-[0.2em] text-sand sm:block">{String(i + 1).padStart(2, '0')}</span>
                 </figcaption>
               </div>
             </Reveal>

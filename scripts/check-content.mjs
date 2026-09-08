@@ -108,7 +108,8 @@ info.push(`données : ${items.length} entités multilingues`)
 const FORBIDDEN = [
   [/\bRouiba\b/i, 'ancienne ville inventée (Rouiba)'],
   [/\brotin\b/i, 'matière de la marque fictive (rotin)'],
-  [/\bcannage\b/i, 'résidu tressage/cannage'],
+  [/\brattan\b/i, 'token couleur de la marque fictive (rattan)'],
+  [/\btressage\b|\bcannage\b/i, 'résidu tressage/cannage'],
   [/\bAlger\b(?!ie)/, 'ancienne ville (Alger) au lieu de Constantine'],
   [/\bBlida\b|\bBoumerdès\b|\bTipaza\b/i, 'wilayas de la maquette précédente'],
   [/Casbah|Tlemcen|Alfour|Zitoun|Caftan|Sahel|Medina/i, 'noms de produits de la maquette fictive'],
@@ -125,7 +126,7 @@ const walk2 = (dir) => {
     else if (/\.(jsx|js|html|md|css)$/.test(f.name)) textFiles.push(full)
   }
 }
-// uniquement les fichiers qui parlent au visiteur (le CSS garde des noms de tokens internes)
+walk2(join(root, 'src/styles'))
 walk2(join(root, 'src/content'))
 walk2(join(root, 'src/sections'))
 walk2(join(root, 'src/components'))

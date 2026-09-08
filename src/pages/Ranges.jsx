@@ -43,7 +43,7 @@ export default function RangesPage() {
     <>
       <Seo path="/gammes" title={`${t('nav.ranges')} — ${company.name}, ${company.city}`} description={t('ranges.lead')} />
 
-      <Section tone="shell" className="!pt-[12.5rem] lg:!pt-[15.5rem]" tight>
+      <Section tone="shell" className="!pt-[10.5rem] lg:!pt-[15rem]" tight>
         <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-8">
             <Reveal>
@@ -82,10 +82,10 @@ export default function RangesPage() {
             >
               <span className="flex w-full items-center justify-between">
                 <span className="h4">{c.name}</span>
-                {c.icon ? <Icon name={c.icon} size={17} className={tag === c.id ? 'text-rattan' : 'text-stone group-hover:text-palm'} /> : null}
+                {c.icon ? <Icon name={c.icon} size={17} className={tag === c.id ? 'text-sand' : 'text-stone group-hover:text-palm'} /> : null}
               </span>
               {c.text && <span className={`text-[0.8125rem] leading-snug ${tag === c.id ? 'text-bone/75' : 'text-stone'}`}>{c.text}</span>}
-              <span className={`mt-1 text-[0.625rem] font-bold uppercase tracking-[0.14em] ${tag === c.id ? 'text-rattan' : 'text-moss'}`}>
+              <span className={`mt-1 text-[0.625rem] font-bold uppercase tracking-[0.14em] ${tag === c.id ? 'text-sand' : 'text-moss'}`}>
                 {tagCount(c.id)} {t('ranges.results')}
               </span>
             </button>

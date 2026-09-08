@@ -26,8 +26,10 @@ export function LangProvider({ children, defaultLang = 'fr' }) {
     if (typeof window === 'undefined') return defaultLang
     const stored = window.localStorage?.getItem(STORAGE_KEY)
     if (stored && DICTS[stored]) return stored
+    /* l’offre est rédigée en français d’abord : on ne dévie vers une autre
+       langue que si le navigateur est explicitement arabe (public cible). */
     const nav = navigator.language?.slice(0, 2).toLowerCase()
-    return DICTS[nav] ? nav : defaultLang
+    return nav === 'ar' ? 'ar' : defaultLang
   })
 
   const setLang = useCallback((code) => {

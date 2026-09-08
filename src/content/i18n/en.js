@@ -51,6 +51,11 @@ export const en = {
       { k: 'Base', v: 'ZI Palma, Constantine' },
     ],
     caption: 'Range extracts. Final visuals will be replaced by your own catalogue photography.',
+    countFamilies: 'furniture families',
+    countBuyers: 'buyer categories',
+    countPrice: 'pricing on request',
+    insetAlt: 'Classroom fitted with desks and benches in wood and steel supplied by Palma Meuble.',
+    scroll: 'Scroll',
   },
   capabilities: {
     items: [
@@ -75,6 +80,10 @@ export const en = {
       { title: 'School & university', text: 'Classrooms, workshops, halls, libraries.' },
       { title: 'Wood & metal', text: 'Two materials, one purchase order.' },
     ],
+  },
+  visual: {
+    tag: 'Interim visual',
+    caption: 'Illustration only: replaced with the actual range photography on delivery.',
   },
   ranges: {
     eyebrow: 'Our ranges',
