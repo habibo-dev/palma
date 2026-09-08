@@ -47,7 +47,10 @@ https://4173-i6xhggg1rm7do60r2sldy.e2b.app
   `dist/` sur l’hébergeur du client (`npm run build`, puis n’importe quel serveur statique —
   aucun serveur applicatif n’est nécessaire).
 - Le bandeau « Concept de présentation — site non officiel » reste affiché sur toutes les pages
-  et dans toutes les langues (`company.demo.enabled`).
+  et dans toutes les langues (`company.demo.enabled`) ; il est aussi repris dans `og:title` et
+  dans le `<noscript>`, donc visible en aperçu de lien partagé et sans JavaScript.
+- Favicon SVG (`public/favicon.svg`), `robots.txt`, et `sitemap.xml` généré **uniquement** quand
+  `VITE_SITE_URL` est fourni — jamais de domaine inventé.
 
 ## Architecture
 

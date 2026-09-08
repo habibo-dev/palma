@@ -1,0 +1,3 @@
+# PALMA MEUBLE EURL — site de présentation.
+User-agent: *
+Allow: /

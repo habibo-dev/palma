@@ -9,8 +9,10 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+void fileURLToPath
 
-const root = join(dirname(fileURLToPath(import.meta.url)), '..')
+const here = dirname(fileURLToPath(import.meta.url))
+const root = join(here, '..')
 const base = (process.env.VITE_SITE_URL || '').trim().replace(/\/+$/, '')
 const file = join(root, 'dist/index.html')
 
@@ -74,4 +76,21 @@ if ((html.match(/<link rel="canonical"/g) || []).length > 1) {
 }
 
 writeFileSync(file, html)
+
+// robots.txt + sitemap.xml : uniquement quand une base réelle est fournie
+const robots = join(root, 'dist/robots.txt')
+if (existsSync(robots)) {
+  const body = readFileSync(robots, 'utf8').trimEnd()
+  writeFileSync(robots, `${body}\n\nSitemap: ${base}/sitemap.xml\n`)
+}
+const { products } = await import('../src/content/catalog.js')
+const routes = ['/', '/gammes', '/a-propos', '/contact', ...products.map((x) => `/gammes/${x.slug}`)]
+const xml = [
+  '<?xml version="1.0" encoding="UTF-8"?>',
+  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+  ...routes.map((r) => `  <url><loc>${base}${r === '/' ? '' : r}</loc><xhtml:link rel="alternate" hreflang="x-default" href="${base}${r === '/' ? '' : r}"/></url>`),
+  '</urlset>',
+].join('\n')
+writeFileSync(join(root, 'dist/sitemap.xml'), `${xml}\n`)
+done.push('robots + sitemap')
 console.log(`seo-base : dist/index.html aligné sur ${base} (${[...new Set(done)].join(', ')})${before === html ? ' — aucune modification nécessaire' : ''}`)
