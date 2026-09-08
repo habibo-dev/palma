@@ -39,7 +39,7 @@ const MANIFEST = [
   { name: 'ambiance-04', ratio: 1.02, width: 950, fallback: 'product-08' },
   { name: 'ambiance-05', ratio: 1.72, width: 1280, fallback: 'product-03' },
   // matieres — recadrages serres dans les photos produits existantes
-  { name: 'material-01', ratio: 1.28, width: 700, src: 'product-03', crop: { x: 0.18, y: 0.42, w: 0.5, h: 0.42 } },
+  { name: 'material-01', ratio: 1.28, width: 700, src: 'product-02', crop: { x: 0.1, y: 0.35, w: 0.42, h: 0.34 } },
   { name: 'material-02', ratio: 1.28, width: 700, src: 'product-01', crop: { x: 0.3, y: 0.5, w: 0.42, h: 0.34 } },
   { name: 'material-03', ratio: 1.28, width: 700, src: 'product-02', crop: { x: 0.34, y: 0.45, w: 0.4, h: 0.32 } },
   { name: 'material-04', ratio: 1.28, width: 700, src: 'product-06', crop: { x: 0.2, y: 0.6, w: 0.45, h: 0.32 } },
