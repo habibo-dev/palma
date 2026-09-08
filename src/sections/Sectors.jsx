@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useLang } from '../lib/i18n.jsx'
 import { sectors } from '../content/entities.js'
+import { company } from '../content/company.js'
 import { Img } from '../components/Img.jsx'
 import { Reveal, Section, SectionHead } from '../components/UI.jsx'
 
@@ -27,7 +28,7 @@ export function Sectors() {
                 <img
                   key={s.id}
                   src={s.image}
-                  alt={L(s).name}
+                  alt={`${L(s).name} — ${company.name}, ${company.city}`}
                   loading="lazy"
                   decoding="async"
                   className={`absolute inset-0 h-full w-full object-cover transition-[opacity,transform] duration-[900ms] ease-[var(--ease-out-quart)] ${
@@ -80,7 +81,7 @@ export function Sectors() {
 
                       {/* image en ligne sur mobile */}
                       <div className="mt-4 lg:hidden">
-                        <Img src={s.image} alt={copy.name} ratio={1.6} sizes="(max-width:1024px) 92vw, 0px" />
+                        <Img src={s.image} alt={`${copy.name} — ${company.name}, ${company.city}`} ratio={1.6} sizes="(max-width:1024px) 92vw, 0px" />
                       </div>
 
                       {i === 0 && (

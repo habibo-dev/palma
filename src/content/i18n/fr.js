@@ -49,7 +49,7 @@ export const fr = {
   },
 
   hero: {
-    badge: 'Palma Meuble EURL — Constantine',
+    badge: 'PALMA MEUBLE EURL — Constantine',
     titleTop: 'Mobilier de bureau',
     titleBottom: 'et mobilier scolaire',
     lead: 'Nous fabriquons et distribuons le mobilier professionnel des entreprises, administrations, écoles et universités : bureaux, chaises, tables, accueil, rangements, vestiaires métalliques. Bois et métal, commandés ensemble, livrés et montés sur site.',
