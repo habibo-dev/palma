@@ -1,4 +1,6 @@
 import { useLang } from '../lib/i18n.jsx'
+import { withBase } from '../lib/asset.js'
+import { company } from '../content/company.js'
 import { advantages, materials } from '../content/entities.js'
 import { Reveal, Section, SectionHead } from '../components/UI.jsx'
 import { Icon } from '../components/Icons.jsx'
@@ -45,8 +47,8 @@ export function Materials({ head = true }) {
               <figure className="group">
                 <div className="relative overflow-hidden rounded-soft" style={{ aspectRatio: '0.78' }}>
                   <img
-                    src={m.texture}
-                    alt={`${copy.name} — Palma`}
+                    src={withBase(m.texture)}
+                    alt={`${copy.name} — ${company.name}, ${company.city}`}
                     loading="lazy"
                     decoding="async"
                     className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.08]"

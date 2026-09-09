@@ -3,6 +3,8 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
+  // sous-répertoire d’hébergement (GitHub Pages) — '/' par défaut, sinon rien ne change
+  base: process.env.VITE_BASE || '/',
   plugins: [react(), tailwindcss()],
   server: {
     host: '0.0.0.0',

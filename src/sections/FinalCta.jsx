@@ -1,4 +1,5 @@
 import { useLang } from '../lib/i18n.jsx'
+import { withBase } from '../lib/asset.js'
 import { company, telLink, whatsappLink, whatsappMessages } from '../content/company.js'
 import { Button, Reveal } from '../components/UI.jsx'
 import { Icon } from '../components/Icons.jsx'
@@ -9,7 +10,7 @@ export function FinalCta() {
   return (
     <section className="relative isolate overflow-hidden bg-palm text-bone">
       <div aria-hidden className="absolute inset-0">
-        <img src="/images/fabric-01.jpg" alt="" loading="lazy" decoding="async" className="h-full w-full object-cover opacity-20" />
+        <img src={withBase('/images/fabric-01.jpg')} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover opacity-20" />
         <div className="absolute inset-0 bg-gradient-to-t from-palm via-palm/88 to-palm/72" />
       </div>
 

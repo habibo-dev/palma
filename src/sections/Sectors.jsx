@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useLang } from '../lib/i18n.jsx'
+import { withBase } from '../lib/asset.js'
 import { sectors } from '../content/entities.js'
 import { company } from '../content/company.js'
 import { Img } from '../components/Img.jsx'
@@ -27,7 +28,7 @@ export function Sectors() {
               {sectors.map((s) => (
                 <img
                   key={s.id}
-                  src={s.image}
+                  src={withBase(s.image)}
                   alt={`${L(s).name} — ${company.name}, ${company.city}`}
                   loading="lazy"
                   decoding="async"

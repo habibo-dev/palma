@@ -84,10 +84,13 @@ function Shell() {
   )
 }
 
+/** sous-répertoire d’hébergement : « /palma » sur GitHub Pages, « / » ailleurs */
+const basename = (import.meta.env.BASE_URL || '/').replace(/\/$/, '') || '/'
+
 export default function App() {
   return (
     <LangProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={basename}>
         <Shell />
       </BrowserRouter>
     </LangProvider>

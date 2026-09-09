@@ -1,0 +1,5 @@
+# PALMA MEUBLE EURL — site de présentation.
+User-agent: *
+Allow: /
+
+Sitemap: https://habibo-dev.github.io/palma/docs/sitemap.xml

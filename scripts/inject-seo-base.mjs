@@ -14,7 +14,8 @@ void fileURLToPath
 const here = dirname(fileURLToPath(import.meta.url))
 const root = join(here, '..')
 const base = (process.env.VITE_SITE_URL || '').trim().replace(/\/+$/, '')
-const file = join(root, 'dist/index.html')
+const outDir = process.env.DIST_DIR || 'dist'
+const file = join(root, outDir, 'index.html')
 
 if (!base) {
   // aucune injection, mais on valide quand même le HTML livré (build client)
@@ -28,7 +29,7 @@ if (!base) {
   process.exit(0)
 }
 if (!existsSync(file)) {
-  console.error('seo-base : dist/index.html introuvable — lancer `npm run build` d’abord.')
+  console.error(`seo-base : ${outDir}/index.html introuvable — lancer \`npm run build\` d’abord.`)
   process.exit(1)
 }
 if (!/^https?:\/\//.test(base)) {
@@ -66,11 +67,16 @@ const before = html
 const done = []
 
 // og:image / og:image:alt / twitter:image → absolus
+/**
+ * Vite préfixe déjà les URL de l’HTML par la `base` de build (ex. /palma/).
+ * On normalise : on retire ce préfixe, puis on pose l’URL absolue du site.
+ */
+const buildBase = (process.env.VITE_BASE || '/').replace(/\/$/, '')
 const absolutize = (attr, value) => {
-  const re = new RegExp(`(<meta[^>]+${attr}="${value}" content=")\/(images\/[^"]+)(")`, 'g')
+  const re = new RegExp(`(<meta[^>]+${attr}="${value}" content=")\/(?:${buildBase}\/)?([^"]+)(")`, 'g')
   const before = html
   html = html.replace(re, `$1${base}/$2$3`)
-  if (before !== html) done.push(attr + ':' + value)
+  if (before !== html) done.push(`${attr}:${value}`)
 }
 absolutize('property', 'og:image')
 absolutize('name', 'twitter:image')
@@ -94,7 +100,7 @@ if (!/<link rel="canonical"/.test(html)) {
 
 // JSON-LD : url de l’organisation + images absolues
 html = html.replace(/("@context": "https:\/\/schema\.org",\s*\n(\s*)"@type": "FurnitureStore")/, `$1,\n$2"url": "${base}/"`)
-html = html.replace(/"image": "(\/images\/[^"]+)"/g, `"image": "${base}$1"`)
+html = html.replace(/"image": "\/(?:[^"]*\/)?images\/([^"]+)"/g, `"image": "${base}/images/$1"`)
 done.push('json-ld')
 
 const errors = await validate(html, base)
@@ -106,7 +112,7 @@ if (errors.length) {
 writeFileSync(file, html)
 
 // robots.txt + sitemap.xml : uniquement quand une base réelle est fournie
-const robots = join(root, 'dist/robots.txt')
+const robots = join(root, outDir, 'robots.txt')
 if (existsSync(robots)) {
   const body = readFileSync(robots, 'utf8').trimEnd()
   writeFileSync(robots, `${body}\n\nSitemap: ${base}/sitemap.xml\n`)
@@ -119,6 +125,6 @@ const xml = [
   ...routes.map((r) => `  <url><loc>${base}${r === '/' ? '' : r}</loc><xhtml:link rel="alternate" hreflang="x-default" href="${base}${r === '/' ? '' : r}"/></url>`),
   '</urlset>',
 ].join('\n')
-writeFileSync(join(root, 'dist/sitemap.xml'), `${xml}\n`)
+writeFileSync(join(root, outDir, 'sitemap.xml'), `${xml}\n`)
 done.push('robots + sitemap')
 console.log(`seo-base : dist/index.html aligné sur ${base} (${[...new Set(done)].join(', ')})${before === html ? ' — aucune modification nécessaire' : ''}`)

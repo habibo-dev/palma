@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { withBase } from '../lib/asset.js'
 
 /**
  * Image responsive avec ratio reserve a l avance (aucun deplacement de mise en page),
@@ -12,7 +13,7 @@ export function Img({ src, alt, ratio = 1.28, priority = false, className = '', 
       style={{ aspectRatio: String(ratio) }}
     >
       <img
-        src={src}
+        src={withBase(src)}
         alt={alt}
         width={1200}
         height={Math.round(1200 / ratio)}

@@ -52,6 +52,32 @@ https://4173-i6xhggg1rm7do60r2sldy.e2b.app
 - Favicon SVG (`public/favicon.svg`), `robots.txt`, et `sitemap.xml` généré **uniquement** quand
   `VITE_SITE_URL` est fourni — jamais de domaine inventé.
 
+## Publication GitHub Pages
+
+Le site est publié sur la branche de session, dossier `docs/` (Pages publie la racine du dépôt,
+donc le site est servi sous `/palma/docs/`) :
+
+```
+https://habibo-dev.github.io/palma/docs/
+```
+
+- `npm run pages` régénère `docs/` (build avec `base = /palma/docs/`, `VITE_SITE_URL` pointant sur
+  l’URL publiée, `404.html` + `.nojekyll`, copies de `robots.txt`/`sitemap.xml` à la racine).
+- **`docs/` est une sortie générée, commitée volontairement** pour que Pages la serve : ne jamais
+  l’éditer à la main, toujours repasser par `npm run pages` puis commiter.
+- `404.html` (racine publiée) = la même coquille applicative : c’est le repli SPA de GitHub Pages,
+  il permet aux liens profonds partagés (`…/palma/docs/gammes/mobilier-scolaire`) de s’ouvrir
+  correctement, le routeur reprenant le chemin demandé.
+- Un script dans le gabarit `index.html` renvoie `/palma` (la page blanche du gabarit Vite) vers
+  `/palma/docs/` ; il ne se déclenche que sur ce chemin exact, jamais en dev ni sur un hébergement
+  à la racine.
+- Si un jour vous basculez la source Pages du dépôt sur le dossier `docs/` (Settings → Pages →
+  Source → `/docs`), relancer `PAGES_BASE=/palma/ PAGES_SITE_URL=https://habibo-dev.github.io/palma npm run pages`
+  pour que le site occupe la racine de l’URL ; le site gagnerait alors en propreté
+  (`/palma/` au lieu de `/palma/docs/`).
+- Pour l’hébergement définitif du client : `npm run build` puis déposer `dist/` n’importe où
+  (URL à la racine, `VITE_SITE_URL=https://domaine.dz npm run build` pour les URL absolues).
+
 ## Architecture
 
 ```

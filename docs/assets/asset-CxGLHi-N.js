@@ -1,0 +1,1 @@
+var e=e=>typeof e!=`string`||!e.startsWith(`/`)?e:`/palma/docs/`.replace(/\/$/,``)+e;export{e as t};

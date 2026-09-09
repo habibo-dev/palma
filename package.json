@@ -11,7 +11,8 @@
     "check": "node scripts/check-content.mjs",
     "verify": "npm run check && node scripts/smoke-render.mjs && node scripts/interact.mjs",
     "test": "node scripts/interact.mjs",
-    "images": "node scripts/optimize-images.mjs"
+    "images": "node scripts/optimize-images.mjs",
+    "pages": "node scripts/publish-pages.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",

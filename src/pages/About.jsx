@@ -1,4 +1,5 @@
 import { useLang } from '../lib/i18n.jsx'
+import { withBase } from '../lib/asset.js'
 import { Link } from 'react-router-dom'
 import { Seo } from '../components/Seo.jsx'
 import { Button, PageHead, Reveal, Section } from '../components/UI.jsx'
@@ -78,7 +79,7 @@ export default function About() {
             <Reveal variant="mask" delay={120}>
               <div className="border-[7px] border-shell bg-shell shadow-[var(--shadow-plate)]">
                 <img
-                  src="/images/fabric-01.jpg"
+                  src={withBase('/images/fabric-01.jpg')}
                   alt={`${company.name} — ${t('address.lead')}`}
                   loading="lazy"
                   decoding="async"
